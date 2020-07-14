@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Range.cs" />
+    <Compile Include="RangeCreation.cs" />
+    <Compile Include="RangePrint.cs" />
+    <Compile Include="RangeProgram.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
