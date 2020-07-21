@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Academits.Dorosh
+namespace RangeTask.Academits.Dorosh
 {
     class RangeProgram
     {
@@ -17,9 +17,9 @@ namespace Academits.Dorosh
                 Console.WriteLine();
                 Console.WriteLine("Выберите пункт (только номер): ");
 
-                string UserChoice = Console.ReadLine();
+                string userChoice = Console.ReadLine();
 
-                if (UserChoice.Equals("1"))
+                if (userChoice.Equals("1"))
                 {
                     Range range = RangeCreation.GetRange();
 
@@ -46,9 +46,9 @@ namespace Academits.Dorosh
                     continue;
                 }
 
-                if (UserChoice.Equals("2"))
+                if (userChoice.Equals("2"))
                 {
-                    Range[] A =
+                    Range[] rangeA =
                     {
                         new Range(1,10),
                         new Range(1, 5),
@@ -57,7 +57,7 @@ namespace Academits.Dorosh
                         new Range(1, 10)
                     };
 
-                    Range[] B =
+                    Range[] rangeB =
 {
                         new Range(5, 15),
                         new Range(5, 10),
@@ -66,25 +66,25 @@ namespace Academits.Dorosh
                         new Range(1, 10)
                     };
 
-                    for (int i = 0; i < A.Length; i++)
+                    for (int i = 0; i < rangeA.Length; i++)
                     {
                         Console.Write("Отрезок 1: ");
-                        RangePrint.Print(A[i]);
+                        RangePrint.Print(rangeA[i]);
 
                         Console.Write("Отрезок 2: ");
-                        RangePrint.Print(B[i]);
+                        RangePrint.Print(rangeB[i]);
 
                         Console.WriteLine();
                         Console.WriteLine("Объединение: ");
-                        RangePrint.Print(A[i].Union(B[i]));
+                        RangePrint.Print(rangeA[i].Union(rangeB[i]));
 
                         Console.WriteLine();
                         Console.WriteLine("Пересечение: ");
-                        RangePrint.Print(A[i].Intersection(B[i]));
+                        RangePrint.Print(rangeA[i].Intersection(rangeB[i]));
 
                         Console.WriteLine();
                         Console.WriteLine("Разность: ");
-                        RangePrint.Print(A[i].Complement(B[i]));
+                        RangePrint.Print(rangeA[i].Complement(rangeB[i]));
 
                         Console.WriteLine();
                         Console.WriteLine("======================");
@@ -98,26 +98,26 @@ namespace Academits.Dorosh
                     continue;
                 }
 
-                if (UserChoice.Equals("3"))
+                if (userChoice.Equals("3"))
                 {
                     Console.WriteLine("Введите отрезок 1: ");
-                    Range A = RangeCreation.GetRange();
+                    Range rangeA = RangeCreation.GetRange();
                     Console.WriteLine();
 
                     Console.WriteLine("Введите отрезок 2: ");
-                    Range B = RangeCreation.GetRange();
+                    Range rangeB = RangeCreation.GetRange();
 
                     Console.WriteLine();
                     Console.WriteLine("Объединение: ");
-                    RangePrint.Print(A.Union(B));
+                    RangePrint.Print(rangeA.Union(rangeB));
 
                     Console.WriteLine();
                     Console.WriteLine("Пересечение: ");
-                    RangePrint.Print(A.Intersection(B));
+                    RangePrint.Print(rangeA.Intersection(rangeB));
 
                     Console.WriteLine();
                     Console.WriteLine("Разность: ");
-                    RangePrint.Print(A.Complement(B));
+                    RangePrint.Print(rangeA.Complement(rangeB));
 
                     Console.WriteLine();
                     Console.WriteLine("Нажмите любую клавишу...");
@@ -127,7 +127,7 @@ namespace Academits.Dorosh
                     continue;
                 }
 
-                if (UserChoice.Equals("4"))
+                if (userChoice.Equals("4"))
                 {
                     break;
                 }

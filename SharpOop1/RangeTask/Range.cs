@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Academits.Dorosh
+namespace RangeTask.Academits.Dorosh
 {
     public class Range
     {
@@ -9,12 +9,6 @@ namespace Academits.Dorosh
         public double From { get; set; }
 
         public double To { get; set; }
-
-        public Range()
-        {
-            From = 0;
-            To = 0;
-        }
 
         public Range(double from, double to)
         {
@@ -42,74 +36,54 @@ namespace Academits.Dorosh
             return IsLargerOrEqual(number, From) && IsSmallerOrEqual(number, To);
         }
 
-        public Range[] Union(Range A)
+        public Range[] Union(Range range)
         {
-            if (this.From > A.To)
+            if (From > range.To)
             {
-                return new Range[] { A, this };
+                return new Range[] { new Range(range.To, range.From), new Range(To, From) };
             }
 
-            if (this.To < A.From)
+            if (To < range.From)
             {
-                return new Range[] { this, A };
+                return new Range[] { new Range(To, From), new Range(range.To, range.From) };
             }
 
-            Range B = new Range();
-
-            B.From = Math.Min(this.From, A.From);
-            B.To = Math.Max(this.To, A.To);
-
-            return new Range[] { B };
+            return new Range[] { new Range(Math.Min(From, range.From), Math.Max(To, range.To)) };
         }
-        public Range Intersection(Range A)
+
+        public Range Intersection(Range range)
         {
-            if (this.To <= A.From || this.From >= A.To)
+            if (To <= range.From || From >= range.To)
             {
                 return null;
             }
 
-            Range B = new Range();
-
-            B.From = Math.Max(this.From, A.From);
-            B.To = Math.Min(this.To, A.To);
-
-            return B;
+            return new Range(Math.Max(From, range.From), Math.Min(To, range.To));
         }
 
-        public Range[] Complement(Range A)
+        public Range[] Complement(Range range)
         {
-            if (this.From >= A.From && this.To <= A.To)        //если отрезки равны или второй больше первого
+            if (From >= range.From && To <= range.To)        //если отрезки равны или второй больше первого
             {
-                return null;
+                return new Range[0];
             }
 
-            if (this.To <= A.From || this.From >= A.To)       //если второй отрезок не соприкасается с первым
+            if (To <= range.From || From >= range.To)       //если второй отрезок не соприкасается с первым
             {
-                return new Range[] { this };
+                return new Range[] { new Range(From, To) };
             }
 
-            if (this.From < A.From && this.To > A.To)         //если второй отрезок меньше и включен в первый
+            if (From < range.From && To > range.To)         //если второй отрезок меньше и включен в первый
             {
-                Range B = new Range(this.From, A.From);
-                Range C = new Range(A.To, this.To);
-
-                return new Range[] { B, C };
+                return new Range[] { new Range(From, range.From), new Range(range.To, To) };
             }
-            //если второй отрезок соприкасается с первым каким-либо краем
-            Range D = new Range();
-
-            if (this.From < A.From)
+            
+            if (From < range.From)                          //если второй отрезок соприкасается с первым каким-либо краем
             {
-                D.From = this.From;
-                D.To = A.From;
-            }
-            else
-            {
-                D.From = A.To;
-                D.To = this.To;
+                return new Range[] { new Range(From, range.From) };
             }
 
-            return new Range[] { D };
+            return new Range[] { new Range(range.To, To) };
         }
     }
 }

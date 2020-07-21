@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Academits.Dorosh
+namespace RangeTask.Academits.Dorosh
 {
     public static class RangeCreation
     {

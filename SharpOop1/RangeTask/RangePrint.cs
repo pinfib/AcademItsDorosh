@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Academits.Dorosh
+namespace RangeTask.Academits.Dorosh
 {
     class RangePrint
     {
         public static void Print(params Range[] ranges)
         {
-            if (ranges == null || ranges[0] == null)
+            if (ranges.Length == 0 || ranges[0] == null)
             {
                 Console.Write("Нет");
                 return;
