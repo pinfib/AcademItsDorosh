@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VectorTask.Academits.Dorosh
+namespace Academits.Dorosh.VectorTask
 {
     public class Vector
     {

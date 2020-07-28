@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VectorTask.Academits.Dorosh
+namespace Academits.Dorosh.VectorTask
 {
     class VectorsTest
     {
