@@ -1,38 +1,39 @@
 ﻿using System;
 
-namespace ShapesTask.Academits.Dorosh
+namespace Academits.Dorosh.ShapesTask.Shapes
 {
-    class Square : IShape
+    class Circle : IShape
     {
-        public double SideLength { get; set; }
+        public double Radius { get; set; }
 
-        public Square(double sideLength)
+        public Circle(double radius)
         {
-            SideLength = sideLength;
-        }
-        public double GetArea()
-        {
-            return Math.Pow(SideLength, 2);
-        }
-
-        public double GetHeight()
-        {
-            return SideLength;
-        }
-
-        public double GetPerimeter()
-        {
-            return SideLength * 4;
+            Radius = radius;
         }
 
         public double GetWidth()
         {
-            return SideLength;
+            return Radius * 2;
+        }
+
+        public double GetHeight()
+        {
+            return Radius * 2;
+        }
+
+        public double GetArea()
+        {
+            return Math.PI * Math.Pow(Radius, 2);
+        }
+
+        public double GetPerimeter()
+        {
+            return 2 * Math.PI * Radius;
         }
 
         public override string ToString()
         {
-            return "Квадрат";
+            return string.Format("Круг (радиус: {0:#.##})", Radius);
         }
 
         public override int GetHashCode()
@@ -40,7 +41,7 @@ namespace ShapesTask.Academits.Dorosh
             int prime = 13;
             int hash = 1;
 
-            hash = prime * hash + SideLength.GetHashCode();
+            hash = prime * hash + Radius.GetHashCode();
 
             return hash;
         }
@@ -57,7 +58,9 @@ namespace ShapesTask.Academits.Dorosh
                 return false;
             }
 
-            return SideLength == ((Square)obj).SideLength;
+            Circle tmpCircle = (Circle)obj;
+
+            return Radius == tmpCircle.Radius;
         }
     }
 }

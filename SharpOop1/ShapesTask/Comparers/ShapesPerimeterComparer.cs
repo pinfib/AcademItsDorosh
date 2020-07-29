@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Academits.Dorosh.ShapesTask.Shapes;
+using System.Collections.Generic;
 
-namespace ShapesTask.Academits.Dorosh
+namespace Academits.Dorosh.ShapesTask.Comparers
 {
     public class ShapesPerimeterComparer : IComparer<IShape>
     {
-        public int Compare(IShape x, IShape y)
+        public int Compare(IShape shape1, IShape shape2)
         {
-            if (x.GetPerimeter().CompareTo(y.GetPerimeter()) != 0)
-            {
-                return y.GetPerimeter().CompareTo(x.GetPerimeter());
-            }
-
-            return 0;
+            return shape2.GetPerimeter().CompareTo(shape1.GetPerimeter());
         }
     }
 }

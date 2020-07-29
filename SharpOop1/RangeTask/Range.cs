@@ -45,7 +45,7 @@ namespace Academits.Dorosh.RangeTask
 
             if (To < range.From)
             {
-                return new Range[] { new Range(To, From), new Range(range.To, range.From) };
+                return new Range[] { new Range(From, To), new Range(range.From, range.To) };
             }
 
             return new Range[] { new Range(Math.Min(From, range.From), Math.Max(To, range.To)) };
@@ -77,7 +77,7 @@ namespace Academits.Dorosh.RangeTask
             {
                 return new Range[] { new Range(From, range.From), new Range(range.To, To) };
             }
-            
+
             if (From < range.From)                          //если второй отрезок соприкасается с первым каким-либо краем
             {
                 return new Range[] { new Range(From, range.From) };

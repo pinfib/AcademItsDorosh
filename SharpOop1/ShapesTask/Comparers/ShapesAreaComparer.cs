@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Academits.Dorosh.ShapesTask.Shapes;
+using System.Collections.Generic;
 
-namespace ShapesTask.Academits.Dorosh
+namespace Academits.Dorosh.ShapesTask.Comparers
 {
     public class ShapesAreaComparer : IComparer<IShape>
     {
-        public int Compare(IShape x, IShape y)
+        public int Compare(IShape shape1, IShape shape2)
         {
-            if (x.GetArea().CompareTo(y.GetArea()) != 0)
-            {
-                return y.GetArea().CompareTo(x.GetArea());
-            }
-
-            return 0;
+            return shape2.GetArea().CompareTo(shape1.GetArea());
         }
     }
 }

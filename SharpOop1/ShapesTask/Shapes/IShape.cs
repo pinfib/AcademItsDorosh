@@ -1,4 +1,4 @@
-﻿namespace ShapesTask.Academits.Dorosh
+﻿namespace Academits.Dorosh.ShapesTask.Shapes
 {
     public interface IShape
     {

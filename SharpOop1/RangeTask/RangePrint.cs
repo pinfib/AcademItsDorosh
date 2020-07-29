@@ -9,6 +9,7 @@ namespace Academits.Dorosh.RangeTask
             if (ranges.Length == 0 || ranges[0] == null)
             {
                 Console.Write("Нет");
+
                 return;
             }
 
