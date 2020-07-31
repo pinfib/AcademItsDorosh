@@ -40,7 +40,7 @@ namespace Academits.Dorosh.RangeTask
         {
             if (From > range.To)
             {
-                return new Range[] { new Range(range.To, range.From), new Range(To, From) };
+                return new Range[] { new Range(range.From, range.To), new Range(From, To) };
             }
 
             if (To < range.From)

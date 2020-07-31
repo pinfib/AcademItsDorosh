@@ -54,7 +54,8 @@ namespace Academits.Dorosh.RangeTask
                         new Range(1, 5),
                         new Range(1, 20),
                         new Range(1, 10),
-                        new Range(1, 10)
+                        new Range(1, 10),
+                        new Range(15, 20)
                     };
 
                     Range[] rangeB =
@@ -63,7 +64,8 @@ namespace Academits.Dorosh.RangeTask
                         new Range(5, 10),
                         new Range(5, 10),
                         new Range(15, 20),
-                        new Range(1, 10)
+                        new Range(1, 10),
+                        new Range(5, 10)
                     };
 
                     for (int i = 0; i < rangeA.Length; i++)
