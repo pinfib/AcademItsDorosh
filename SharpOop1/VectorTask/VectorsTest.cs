@@ -79,7 +79,7 @@ namespace Academits.Dorosh.VectorTask
             Console.WriteLine();
 
             Console.WriteLine("Исходный вектор");
-            Console.WriteLine("Вектор 1 - {0},  длина вектора: {1:#.###}", vector.ToString(), vector.GetLength());
+            Console.WriteLine("Вектор 1 - {0},  длина вектора: {1:#.###}, размерность: {2:#.###}", vector.ToString(), vector.GetLength(), vector.GetSize());
             Console.WriteLine();
 
             for (int i = 0; i < 2; i++)
@@ -90,7 +90,7 @@ namespace Academits.Dorosh.VectorTask
                 {
                     case 0:
                         Console.Write("Умножение на скаляр: ".PadRight(25, ' '));
-                        tmpVector.MultiplyVector(scalar);
+                        tmpVector.ScalarMultiplication(scalar);
                         break;
                     case 1:
                         Console.Write("Разворот вектора: ".PadRight(25, ' '));
