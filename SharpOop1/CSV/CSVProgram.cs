@@ -1,32 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSV
+﻿namespace Academits.Dorosh.CSV
 {
     class CSVProgram
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            string input = "..\\..\\input.txt";
 
-            /*
-             using (StreamReader reader = new StreamReader("..\\..\\input.txt"))
-{
-    using (StreamWriter writer = new StreamWriter("..\\..\\output.txt"))
-    {
-        string currentLine;
+            string output = "..\\..\\output.html";
 
-        while ((currentLine = reader.ReadLine()) != null)
-        {
-            currentLine = currentLine.ToUpper();
-
-            writer.WriteLine(currentLine);
-        }
-    }
-}
- */
+            CSVConverter.ToCSV(input, output);
         }
     }
 }

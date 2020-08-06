@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace ArrayListHomeTask
+namespace Academits.Dorosh.ArrayListHomeTask
 {
     class ArrayListHomeProgram
     {

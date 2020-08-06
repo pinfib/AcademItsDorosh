@@ -45,9 +45,14 @@
   <ItemGroup>
     <Compile Include="CSVProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CSVConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="input.txt" />
+    <Content Include="output.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
