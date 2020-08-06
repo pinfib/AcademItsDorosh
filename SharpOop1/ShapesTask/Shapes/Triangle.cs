@@ -17,7 +17,7 @@ namespace Academits.Dorosh.ShapesTask.Shapes
             PointC = new double[] { x3, y3 };
         }
 
-        public static double GetSideLength(double x1, double y1, double x2, double y2)
+        private static double GetSideLength(double x1, double y1, double x2, double y2)
         {
             return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
         }
@@ -34,21 +34,21 @@ namespace Academits.Dorosh.ShapesTask.Shapes
 
         public double GetArea()
         {
-            double SideAB = GetSideLength(PointA[0], PointA[1], PointB[0], PointB[1]);
-            double SideBC = GetSideLength(PointB[0], PointB[1], PointC[0], PointC[1]);
-            double SideAC = GetSideLength(PointA[0], PointA[1], PointC[0], PointC[1]);
+            double sideAB = GetSideLength(PointA[0], PointA[1], PointB[0], PointB[1]);
+            double sideBC = GetSideLength(PointB[0], PointB[1], PointC[0], PointC[1]);
+            double sideAC = GetSideLength(PointA[0], PointA[1], PointC[0], PointC[1]);
             double semiPerimeter = GetPerimeter() / 2;
 
-            return Math.Sqrt(semiPerimeter * ((semiPerimeter - SideAB) * (semiPerimeter - SideBC) * (semiPerimeter - SideAC)));
+            return Math.Sqrt(semiPerimeter * ((semiPerimeter - sideAB) * (semiPerimeter - sideBC) * (semiPerimeter - sideAC)));
         }
 
         public double GetPerimeter()
         {
-            double SideAB = GetSideLength(PointA[0], PointA[1], PointB[0], PointB[1]);
-            double SideBC = GetSideLength(PointB[0], PointB[1], PointC[0], PointC[1]);
-            double SideAC = GetSideLength(PointA[0], PointA[1], PointC[0], PointC[1]);
+            double sideAB = GetSideLength(PointA[0], PointA[1], PointB[0], PointB[1]);
+            double sideBC = GetSideLength(PointB[0], PointB[1], PointC[0], PointC[1]);
+            double sideAC = GetSideLength(PointA[0], PointA[1], PointC[0], PointC[1]);
 
-            return SideAB + SideBC + SideAC;
+            return sideAB + sideBC + sideAC;
         }
 
         public override string ToString()

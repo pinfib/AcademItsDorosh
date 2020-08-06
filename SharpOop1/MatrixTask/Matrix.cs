@@ -1,19 +1,20 @@
 ﻿using Academits.Dorosh.VectorTask;
 using System;
+using System.Text;
 
 namespace Academits.Dorosh.MatrixTask
 {
     public class Matrix
     {
-        public Vector[] Vectors { get; set; }
+        private Vector[] vectors;
 
         public Matrix(int width, int height)
         {
-            Vectors = new Vector[height];
+            vectors = new Vector[height];
 
             for (int i = 0; i < height; i++)
             {
-                Vectors[i] = new Vector(width);
+                vectors[i] = new Vector(width);
             }
         }
 
@@ -22,61 +23,68 @@ namespace Academits.Dorosh.MatrixTask
             int height = array.GetLength(0);
             int width = array.GetLength(1);
 
-            Vectors = new Vector[height];
+            vectors = new Vector[height];
 
             for (int i = 0; i < height; i++)
             {
-                Vectors[i] = new Vector(width);
+                vectors[i] = new Vector(width);
 
                 for (int j = 0; j < width; j++)
                 {
-                    Vectors[i].SetComponent(j, array[i, j]);
+                    vectors[i].SetComponent(j, array[i, j]);
                 }
             }
         }
 
         public Matrix(Vector[] vectors)
         {
-            int width = vectors[0].GetSize();
+            int width = vectors[0].GetSize();           //поиск максимальной длины вектора
 
             foreach (Vector v in vectors)
             {
                 width = Math.Max(width, v.GetSize());
             }
 
-            Vectors = new Vector[vectors.Length];
+            this.vectors = new Vector[vectors.Length];
 
             for (int i = 0; i < vectors.Length; i++)
             {
-                Vectors[i] = new Vector(width, vectors[i].Components);
+                this.vectors[i] = new Vector(width);    //все вектора матрицы объявить максимальной длины
+
+                int size = vectors[i].GetSize();
+
+                for (int j = 0; j < size; j++)          //заполнить вектор-строку, ограничение по длине исходного вектора
+                {
+                    this.vectors[i].SetComponent(j, vectors[i].GetComponent(j));
+                }
             }
         }
 
         public Matrix(Matrix matrix)
         {
-            int m = matrix.GetHeight();
+            int height = matrix.GetHeight();
 
-            Vectors = new Vector[m];
+            vectors = new Vector[height];
 
-            for (int i = 0; i < m; i++)
+            for (int i = 0; i < height; i++)
             {
-                Vectors[i] = new Vector(matrix.Vectors[i]);
+                vectors[i] = new Vector(matrix.vectors[i]);
             }
         }
 
         public int GetWidth()
         {
-            return Vectors[0].GetSize();
+            return vectors[0].GetSize();
         }
 
         public int GetHeight()
         {
-            return Vectors.Length;
+            return vectors.Length;
         }
 
         public Vector GetHorisontalVector(int index)
         {
-            return new Vector(Vectors[index]);
+            return new Vector(vectors[index]);
         }
 
         public Vector GetVerticalVector(int index)
@@ -86,30 +94,33 @@ namespace Academits.Dorosh.MatrixTask
 
             for (int i = 0; i < height; i++)
             {
-                tmpComponents[i] = Vectors[i].Components[index];
+                tmpComponents[i] = vectors[i].GetComponent(index);
             }
 
             return new Vector(height, tmpComponents);
         }
 
-        public void SetHorisontalVector(int index, params double[] components)
-        {
-            if (GetWidth() < components.Length)
-            {
-                throw new ArgumentException("Количество компонент не может быть больше размерности матрицы");
-            }
-
-            Vectors[index] = new Vector(GetWidth(), components);
-        }
-
         public void SetHorisontalVector(int index, Vector vector)
         {
-            if (GetWidth() < vector.GetSize())
+            if (vector.GetSize() != GetWidth())
             {
-                throw new ArgumentException("Количество компонент не может быть больше размерности матрицы");
+                int width = GetWidth();
+
+                double[] components = new double[width];
+
+                int size = vector.GetSize();
+
+                for (int i = 0; i < size && i < width; i++)
+                {
+                    components[i] = vector.GetComponent(i);
+                }
+
+                vectors[index] = new Vector(width, components);
+
+                return;
             }
 
-            Vectors[index] = new Vector(GetWidth(), vector.Components);
+            vectors[index] = new Vector(vector);
         }
 
         public Matrix Transpose()
@@ -127,73 +138,76 @@ namespace Academits.Dorosh.MatrixTask
             return tmpMatrix;
         }
 
-        public void ScalarMultiplication(double scalar)
+        public void MultiplyByNumber(double number)
         {
             int height = GetHeight();
 
             for (int i = 0; i < height; i++)
             {
-                Vectors[i].ScalarMultiplication(scalar);
+                vectors[i].MultiplyByNumber(number);
             }
         }
 
-        public void AddMatrix(Matrix matrix)
+        public void Add(Matrix matrix)
         {
-            if (GetHeight() != matrix.GetHeight() || GetWidth() != matrix.GetWidth())
+            int width1 = GetWidth();
+            int width2 = matrix.GetWidth();
+
+            int height1 = GetHeight();
+            int height2 = matrix.GetHeight();
+
+            if (height1 != height2 || width1 != width2)
             {
-                throw new ArgumentException("Нельзя складывать матрицы разных размерностей");
+                throw new ArgumentException(String.Format("Размеры текущей матрицы: {0}x{1}, входящей: {2}x{3}.\n Нельзя складывать или вычитать матрицы разных размерностей", width1, height1, width2, height2));
             }
-
-            int height = GetHeight();
-
-            for (int i = 0; i < height; i++)
+            else
             {
-                Vectors[i].AddVector(matrix.Vectors[i]);
+                for (int i = 0; i < height1; i++)
+                {
+                    vectors[i].Add(matrix.vectors[i]);
+                }
             }
         }
 
-        public void SubtractMatrix(Matrix matrix)
+        public void Subtract(Matrix matrix)
         {
-            if (GetHeight() != matrix.GetHeight() || GetWidth() != matrix.GetWidth())
-            {
-                throw new ArgumentException("Нельзя вычитать матрицы разных размерностей");
-            }
+            Matrix tmpMatrix = new Matrix(matrix);
 
-            int height = GetHeight();
+            tmpMatrix.MultiplyByNumber(-1);
 
-            for (int i = 0; i < height; i++)
-            {
-                Vectors[i].SubtractVector(matrix.GetHorisontalVector(i));
-            }
+            Add(tmpMatrix);
         }
 
         public Matrix VerticalVectorMultiplication(Vector vector)
         {
+            int size = vector.GetSize();
+            int width = GetWidth();
+            int height = GetHeight();
+
             if (GetHeight() != vector.GetSize())
             {
-                throw new ArgumentException("Количество строк в матрице не совпадает с размерностью вертикального вектора");
+                throw new ArgumentException(String.Format("Размеры текущей матрицы: {0}x{1}, размерность вектора: {2}\nКоличество строк в матрице и размерность вертикального вектора должны совпадать", width, height, size));
             }
-
-            Matrix tmpMatrix = null;
-
-            int height = vector.GetSize();
-            int width = GetWidth();
-
-            tmpMatrix = new Matrix(1, height);
-
-            for (int i = 0; i < height; i++)
+            else
             {
-                double value = 0;
+                Matrix tmpMatrix = null;
 
-                for (int j = 0; j < width; j++)
+                tmpMatrix = new Matrix(1, size);
+
+                for (int i = 0; i < size; i++)
                 {
-                    value += Vectors[i].GetComponent(j) * vector.GetComponent(j);
+                    double value = 0;
+
+                    for (int j = 0; j < width; j++)
+                    {
+                        value += vectors[i].GetComponent(j) * vector.GetComponent(j);
+                    }
+
+                    tmpMatrix.SetHorisontalVector(i, new Vector(value));
                 }
 
-                tmpMatrix.SetHorisontalVector(i, value);
+                return tmpMatrix;
             }
-
-            return tmpMatrix;
         }
 
         public double GetDeterminant()
@@ -203,156 +217,141 @@ namespace Academits.Dorosh.MatrixTask
 
             if (width != height)
             {
-                throw new ArgumentException("Определитель можно найти только для квадратной матрицы");
+                throw new ArgumentException(string.Format("Размеры матрицы: {0}x{1}\nОпределитель можно найти только для квадратной матрицы", width, height));
             }
-
-            if (height == 1)
+            else
             {
-                return 1;
-            }
-
-            Matrix tmpMatrix = new Matrix(this);
-
-            double determinant = 1;
-
-            for (int i = 0; i < height; i++)
-            {
-                if (tmpMatrix.GetHorisontalVector(i).GetComponent(i) == 0) //Если текущий элемент 0, меняем местами текущую строку со следующий, где текущей элемент не 0
+                if (height == 1)
                 {
-                    Vector tmpVector = tmpMatrix.Vectors[i];
+                    return 1;
+                }
 
-                    for (int j = i; j < height; j++)
+                Matrix tmpMatrix = new Matrix(this);
+
+                double determinant = 1;
+
+                for (int i = 0; i < height; i++)
+                {
+                    if (tmpMatrix.GetHorisontalVector(i).GetComponent(i) == 0) //Если текущий элемент 0, меняем местами текущую строку со следующий, где текущей элемент не 0
                     {
-                        if (tmpMatrix.Vectors[j].Components[i] == 0)
+                        Vector tmpVector = tmpMatrix.vectors[i];
+
+                        for (int j = i; j < height; j++)
                         {
-                            continue;
+                            if (tmpMatrix.vectors[j].GetComponent(i) == 0)
+                            {
+                                continue;
+                            }
+
+                            tmpMatrix.vectors[i] = tmpMatrix.vectors[j];
+                            tmpMatrix.vectors[j] = tmpVector;
+
+                            determinant *= -1;
+
+                            break;
                         }
-
-                        tmpMatrix.Vectors[i] = tmpMatrix.Vectors[j];
-                        tmpMatrix.Vectors[j] = tmpVector;
-
-                        determinant *= -1;
-
-                        break;
                     }
-                }
 
-                for (int j = i + 1; j < height; j++)
-                {
-                    if (tmpMatrix.Vectors[j].GetComponent(i) != 0) //Если текущий элемент не 0, приводим матрицу к верхнетреугольному виду
+                    for (int j = i + 1; j < height; j++)
                     {
-                        Vector tmpVector = new Vector(tmpMatrix.Vectors[i]);
-                        tmpVector.ScalarMultiplication(tmpMatrix.Vectors[j].Components[i] / tmpMatrix.Vectors[i].Components[i]);
+                        if (tmpMatrix.vectors[j].GetComponent(i) != 0) //Если текущий элемент не 0, приводим матрицу к верхнетреугольному виду
+                        {
+                            Vector tmpVector = new Vector(tmpMatrix.vectors[i]);
+                            tmpVector.MultiplyByNumber(tmpMatrix.vectors[j].GetComponent(i) / tmpMatrix.vectors[i].GetComponent(i));
 
-                        tmpMatrix.Vectors[j].SubtractVector(tmpVector);
+                            tmpMatrix.vectors[j].Subtract(tmpVector);
+                        }
                     }
                 }
-            }
 
-            for (int i = 0; i < height; i++)
-            {
-                determinant *= tmpMatrix.Vectors[i].GetComponent(i);
-            }
+                for (int i = 0; i < height; i++)
+                {
+                    determinant *= tmpMatrix.vectors[i].GetComponent(i);
+                }
 
-            return determinant;
+                return determinant;
+            }
         }
 
-        public static Matrix AddMatrices(Matrix matrix1, Matrix matrix2)
+        public static Matrix Add(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.GetHeight() != matrix2.GetHeight() || matrix1.GetWidth() != matrix2.GetWidth())
-            {
-                throw new ArgumentException("Нельзя складывать матрицы разных размерностей");
-            }
-
             Matrix newMatrix = new Matrix(matrix1);
-
-            int height = newMatrix.GetHeight();
-
-            for (int i = 0; i < height; i++)
-            {
-                newMatrix.Vectors[i].AddVector(matrix2.Vectors[i]);
-            }
+            newMatrix.Add(matrix2);
 
             return newMatrix;
         }
 
-        public static Matrix SubtractMatrices(Matrix matrix1, Matrix matrix2)
+        public static Matrix Subtract(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.GetHeight() != matrix2.GetHeight() || matrix1.GetWidth() != matrix2.GetWidth())
-            {
-                throw new ArgumentException("Нельзя вычитать матрицы разных размерностей");
-            }
-
             Matrix newMatrix = new Matrix(matrix1);
 
-            int height = newMatrix.GetHeight();
-
-            for (int i = 0; i < height; i++)
-            {
-                newMatrix.Vectors[i].SubtractVector(matrix2.Vectors[i]);
-            }
+            newMatrix.Subtract(matrix2);
 
             return newMatrix;
         }
 
         public static Matrix MatrixMultiplication(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.GetWidth() != matrix2.GetHeight())
-            {
-                throw new ArgumentException("Количество строк должно быть равно количеству столбцов");
-            }
-
             int newHeight = matrix1.GetHeight();
             int newWidth = matrix2.GetWidth();
 
-            Matrix newMatrix = new Matrix(newWidth, newHeight);
-
-            int height = matrix2.GetHeight();
-
-            for (int i = 0; i < newHeight; i++)
+            if (newWidth != newHeight)
             {
-                Vector newVector = new Vector(newWidth);
+                throw new ArgumentException(string.Format("Размеры матрицы 1: {0}x{1} , размеры матрицы 2: {2}x{3} \nКоличество строк должно быть равно количеству столбцов", matrix1.GetWidth(), newHeight, newWidth, matrix2.GetHeight()));
+            }
+            else
+            {
+                Matrix newMatrix = new Matrix(newWidth, newHeight);
 
-                for (int j = 0; j < newWidth; j++)
+                int height = matrix2.GetHeight();
+
+                for (int i = 0; i < newHeight; i++)
                 {
-                    Vector vector1 = matrix1.GetHorisontalVector(i);
-                    Vector vector2 = matrix2.GetVerticalVector(j);
+                    Vector newVector = new Vector(newWidth);
 
-                    double value = 0;
-
-                    for (int k = 0; k < height; k++)
+                    for (int j = 0; j < newWidth; j++)
                     {
-                        value += vector1.GetComponent(k) * vector2.GetComponent(k);
+                        Vector vector1 = matrix1.GetHorisontalVector(i);
+                        Vector vector2 = matrix2.GetVerticalVector(j);
+
+                        double value = 0;
+
+                        for (int k = 0; k < height; k++)
+                        {
+                            value += vector1.GetComponent(k) * vector2.GetComponent(k);
+                        }
+
+                        newVector.SetComponent(j, value);
                     }
 
-                    newVector.SetComponent(j, value);
+                    newMatrix.SetHorisontalVector(i, newVector);
                 }
 
-                newMatrix.SetHorisontalVector(i, newVector);
+                return newMatrix;
             }
-
-            return newMatrix;
         }
 
         public override string ToString()
         {
-            string tmpString = null;
+            StringBuilder tmpString = new StringBuilder();
+
+            tmpString.Append("{\n");
 
             int height = GetHeight();
 
             for (int i = 0; i < height; i++)
             {
-                tmpString += Vectors[i].ToString();
+                tmpString.Append(vectors[i].ToString());
 
                 if (i != height - 1)
                 {
-                    tmpString += ", \n";
+                    tmpString.Append(", \n");
                 }
             }
 
-            tmpString = "{\n" + tmpString + "\n}";
+            tmpString.Append("\n}");
 
-            return tmpString;
+            return tmpString.ToString();
         }
     }
 }

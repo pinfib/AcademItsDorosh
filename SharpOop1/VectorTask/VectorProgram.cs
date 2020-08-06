@@ -6,7 +6,6 @@ namespace Academits.Dorosh.VectorTask
     {
         static void Main()
         {
-            
             Console.WriteLine();
             Console.WriteLine("Введите вектор 1");
             Vector vector1 = VectorCreation.GetVector();
@@ -14,9 +13,9 @@ namespace Academits.Dorosh.VectorTask
             Console.WriteLine();
             Console.WriteLine("Введите вектор 2");
             Vector vector2 = VectorCreation.GetVector();
-            
-            //Vector vector1 = new Vector(1.0, 1, 1);
-            //Vector vector2 = new Vector(7, vector1.Components);
+
+            //Vector vector1 = new Vector(4, 1, 1, 1, 1);
+            //Vector vector2 = new Vector(4, 1, 1, 1, 1);
 
             Console.WriteLine();
             Console.Write("Векторы равны? ");
@@ -35,7 +34,7 @@ namespace Academits.Dorosh.VectorTask
             VectorsTest.SelfMethodsTest(vector1, 10);
             VectorsTest.SelfMethodsTest(vector2, 10);
 
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }

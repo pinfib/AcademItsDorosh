@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Academits.Dorosh.VectorTask
 {
@@ -26,11 +22,11 @@ namespace Academits.Dorosh.VectorTask
                 {
                     case 0:
                         Console.Write("Сложение векторов: ".PadRight(25, ' '));
-                        tmpVector1.AddVector(tmpVector2);
+                        tmpVector1.Add(tmpVector2);
                         break;
                     case 1:
                         Console.Write("Вычитание векторов: ".PadRight(25, ' '));
-                        tmpVector1.SubtractVector(tmpVector2);
+                        tmpVector1.Subtract(tmpVector2);
                         break;
                 }
 
@@ -58,19 +54,19 @@ namespace Academits.Dorosh.VectorTask
                 {
                     case 0:
                         Console.Write("Сложение векторов: ".PadRight(25, ' '));
-                        vector3 = Vector.AddVectors(tmpVector1, tmpVector2);
+                        vector3 = Vector.Add(tmpVector1, tmpVector2);
+                        Console.WriteLine(vector3.ToString());
                         break;
                     case 1:
                         Console.Write("Вычитание векторов: ".PadRight(25, ' '));
-                        vector3 = Vector.SubtractVectors(tmpVector1, tmpVector2);
+                        vector3 = Vector.Subtract(tmpVector1, tmpVector2);
+                        Console.WriteLine(vector3.ToString());
                         break;
                     case 2:
-                        Console.Write("Умножение векторов: ".PadRight(25, ' '));
-                        vector3 = Vector.MultiplyVectors(tmpVector1, tmpVector2);
+                        Console.Write("Скалярное произведение векторов: ".PadRight(25, ' '));
+                        Console.WriteLine(Vector.ScalarMultiplication(tmpVector1, tmpVector2));
                         break;
                 }
-
-                Console.WriteLine(vector3.ToString());
             }
         }
 
@@ -79,7 +75,7 @@ namespace Academits.Dorosh.VectorTask
             Console.WriteLine();
 
             Console.WriteLine("Исходный вектор");
-            Console.WriteLine("Вектор 1 - {0},  длина вектора: {1:#.###}, размерность: {2:#.###}", vector.ToString(), vector.GetLength(), vector.GetSize());
+            Console.WriteLine("Вектор 1 - {0},  длина вектора: {1:#.###}, размерность: {2:#.###}", vector.ToString(), vector.GetModule(), vector.GetSize());
             Console.WriteLine();
 
             for (int i = 0; i < 2; i++)
@@ -90,7 +86,7 @@ namespace Academits.Dorosh.VectorTask
                 {
                     case 0:
                         Console.Write("Умножение на скаляр: ".PadRight(25, ' '));
-                        tmpVector.ScalarMultiplication(scalar);
+                        tmpVector.MultiplyByNumber(scalar);
                         break;
                     case 1:
                         Console.Write("Разворот вектора: ".PadRight(25, ' '));

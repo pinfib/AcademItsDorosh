@@ -6,10 +6,10 @@
 
         public double Width { get; set; }
 
-        public Rectangle(double sideHeight, double sideWidth)
+        public Rectangle(double height, double width)
         {
-            Height = sideHeight;
-            Width = sideWidth;
+            Height = height;
+            Width = width;
         }
 
         public double GetWidth()

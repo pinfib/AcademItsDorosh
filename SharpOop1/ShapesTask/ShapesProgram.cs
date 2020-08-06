@@ -3,11 +3,11 @@ using Academits.Dorosh.ShapesTask.Shapes;
 using System;
 using System.Collections.Generic;
 
-namespace ShapesTask.Academits.Dorosh
+namespace Academits.Dorosh.ShapesTask
 {
     class ShapesProgram
     {
-        public static IShape MaxShapeSearch(IShape[] shapes, IComparer<IShape> comparer, int positionNumber)
+        public static IShape GetMaxShape(IShape[] shapes, IComparer<IShape> comparer, int positionNumber)
         {
             Array.Sort(shapes, comparer);
 
@@ -17,7 +17,7 @@ namespace ShapesTask.Academits.Dorosh
         public static void Print(IShape shape)
         {
             Console.Write("H: {0, -4:#.##} W: {1, -4:#.##} PERIMETER: {2, -8:#.##} AREA: {3, -8:#.##} ", shape.GetHeight(), shape.GetWidth(), shape.GetPerimeter(), shape.GetArea());
-            Console.Write("ToString: {0}", shape.ToString());
+            Console.Write("ToString: {0}", shape);
             //Console.Write("HashCode: {0}", shape.GetHashCode());
             Console.WriteLine();
         }
@@ -43,11 +43,11 @@ namespace ShapesTask.Academits.Dorosh
 
             Console.WriteLine();
             Console.WriteLine("Первая по площади фигура:");
-            Print(MaxShapeSearch(shapes, new ShapesAreaComparer(), 0));
+            Print(GetMaxShape(shapes, new ShapesAreaComparer(), 0));
 
             Console.WriteLine();
             Console.WriteLine("Вторая по периметру фигура:");
-            Print(MaxShapeSearch(shapes, new ShapesPerimeterComparer(), 1));
+            Print(GetMaxShape(shapes, new ShapesPerimeterComparer(), 1));
 
             Console.ReadLine();
         }

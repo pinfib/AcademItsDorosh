@@ -11,15 +11,15 @@ namespace Academits.Dorosh.VectorTask
                 try
                 {
                     Console.Write("Введите размерность вектора: ");
-                    int n = Convert.ToInt32(Console.ReadLine());
+                    int length = Convert.ToInt32(Console.ReadLine());
 
                     Console.Write("Введите компоненты вектора через пробел: ");
                     char[] charSeparators = { ' ' };
                     string[] userLine = Console.ReadLine().Split(charSeparators);
 
-                    double[] components = new double[userLine.Length];
+                    double[] components = new double[length];
 
-                    for (int i = 0; i < components.Length; i++)
+                    for (int i = 0; i < userLine.Length && i < length; i++)
                     {
                         try
                         {
@@ -31,12 +31,12 @@ namespace Academits.Dorosh.VectorTask
                         }
                     }
 
-                    return new Vector(n, components);
+                    return new Vector(length, components);
                 }
                 catch (ArgumentException e)
                 {
                     Console.WriteLine();
-                    Console.WriteLine(e);
+                    Console.WriteLine(e.Message);
                     Console.WriteLine();
                 }
             }
