@@ -54,17 +54,17 @@ namespace Academits.Dorosh.VectorTask
                 {
                     case 0:
                         Console.Write("Сложение векторов: ".PadRight(25, ' '));
-                        vector3 = Vector.Add(tmpVector1, tmpVector2);
+                        vector3 = Vector.GetSum(tmpVector1, tmpVector2);
                         Console.WriteLine(vector3.ToString());
                         break;
                     case 1:
                         Console.Write("Вычитание векторов: ".PadRight(25, ' '));
-                        vector3 = Vector.Subtract(tmpVector1, tmpVector2);
+                        vector3 = Vector.GetDifference(tmpVector1, tmpVector2);
                         Console.WriteLine(vector3.ToString());
                         break;
                     case 2:
                         Console.Write("Скалярное произведение векторов: ".PadRight(25, ' '));
-                        Console.WriteLine(Vector.ScalarMultiplication(tmpVector1, tmpVector2));
+                        Console.WriteLine(Vector.GetScalarMultiplication(tmpVector1, tmpVector2));
                         break;
                 }
             }

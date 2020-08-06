@@ -40,15 +40,15 @@ namespace Academits.Dorosh.MatrixTask
             try
             {
                 Console.WriteLine("=== Умножение (статический): ===");
-                Console.WriteLine(Matrix.MatrixMultiplication(matrix1, matrix2));
+                Console.WriteLine(Matrix.GetMultiplication(matrix1, matrix2));
                 Console.WriteLine();
 
                 Console.WriteLine("=== Сложение (статический): ===");
-                Console.WriteLine(Matrix.Add(matrix1, matrix2));
+                Console.WriteLine(Matrix.GetSum(matrix1, matrix2));
                 Console.WriteLine();
 
                 Console.WriteLine("=== Вычитание (статический): ===");
-                Console.WriteLine(Matrix.Subtract(matrix1, matrix2));
+                Console.WriteLine(Matrix.GetDifference(matrix1, matrix2));
                 Console.WriteLine();
 
                 Console.WriteLine("=== Сложение (не статический): ===");
@@ -64,7 +64,7 @@ namespace Academits.Dorosh.MatrixTask
                 Vector vector = new Vector(2.0, 2.0, 2.0, 2.0);
 
                 Console.WriteLine("=== Умножение на вертикальный вектор: ===");
-                Console.WriteLine(matrix1.VerticalVectorMultiplication(vector).ToString());
+                Console.WriteLine(matrix1.GetVectorMultiplication(vector).ToString());
 
                 Console.WriteLine("=== Умножение на скаляр: ===");
                 matrix1.MultiplyByNumber(10);
@@ -83,7 +83,7 @@ namespace Academits.Dorosh.MatrixTask
                 Console.WriteLine("Исходная");
                 Console.WriteLine(matrix5.ToString());
                 Console.WriteLine("Транспонированная");
-                Console.WriteLine(matrix5.Transpose().ToString());
+                Console.WriteLine(matrix5.GetTranspose().ToString());
 
                 Console.WriteLine("=== Вычисление определителя матрицы: ===");
 

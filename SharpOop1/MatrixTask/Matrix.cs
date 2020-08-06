@@ -123,7 +123,7 @@ namespace Academits.Dorosh.MatrixTask
             vectors[index] = new Vector(vector);
         }
 
-        public Matrix Transpose()
+        public Matrix GetTranspose()
         {
             int width = GetWidth();
             int height = GetHeight();
@@ -178,7 +178,7 @@ namespace Academits.Dorosh.MatrixTask
             Add(tmpMatrix);
         }
 
-        public Matrix VerticalVectorMultiplication(Vector vector)
+        public Matrix GetVectorMultiplication(Vector vector)    //Умножение на вертикальный вектор
         {
             int size = vector.GetSize();
             int width = GetWidth();
@@ -190,9 +190,7 @@ namespace Academits.Dorosh.MatrixTask
             }
             else
             {
-                Matrix tmpMatrix = null;
-
-                tmpMatrix = new Matrix(1, size);
+                Matrix tmpMatrix = new Matrix(1, size);
 
                 for (int i = 0; i < size; i++)
                 {
@@ -273,7 +271,7 @@ namespace Academits.Dorosh.MatrixTask
             }
         }
 
-        public static Matrix Add(Matrix matrix1, Matrix matrix2)
+        public static Matrix GetSum(Matrix matrix1, Matrix matrix2)
         {
             Matrix newMatrix = new Matrix(matrix1);
             newMatrix.Add(matrix2);
@@ -281,7 +279,7 @@ namespace Academits.Dorosh.MatrixTask
             return newMatrix;
         }
 
-        public static Matrix Subtract(Matrix matrix1, Matrix matrix2)
+        public static Matrix GetDifference(Matrix matrix1, Matrix matrix2)
         {
             Matrix newMatrix = new Matrix(matrix1);
 
@@ -290,7 +288,7 @@ namespace Academits.Dorosh.MatrixTask
             return newMatrix;
         }
 
-        public static Matrix MatrixMultiplication(Matrix matrix1, Matrix matrix2)
+        public static Matrix GetMultiplication(Matrix matrix1, Matrix matrix2)
         {
             int newHeight = matrix1.GetHeight();
             int newWidth = matrix2.GetWidth();

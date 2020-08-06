@@ -141,7 +141,7 @@ namespace Academits.Dorosh.VectorTask
             components[index] = value;
         }
 
-        public static Vector Add(Vector vector1, Vector vector2)
+        public static Vector GetSum(Vector vector1, Vector vector2)
         {
             Vector newVector = new Vector(Math.Max(vector1.GetSize(), vector2.GetSize()));
 
@@ -151,7 +151,7 @@ namespace Academits.Dorosh.VectorTask
             return newVector;
         }
 
-        public static Vector Subtract(Vector vector1, Vector vector2)
+        public static Vector GetDifference(Vector vector1, Vector vector2)
         {
             Vector newVector = new Vector(Math.Max(vector1.GetSize(), vector2.GetSize()));
 
@@ -161,7 +161,7 @@ namespace Academits.Dorosh.VectorTask
             return newVector;
         }
 
-        public static double ScalarMultiplication(Vector vector1, Vector vector2)
+        public static double GetScalarMultiplication(Vector vector1, Vector vector2)
         {
             double result = 0;
 
