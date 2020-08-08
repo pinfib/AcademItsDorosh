@@ -13,10 +13,8 @@ namespace Academits.Dorosh.VectorTask
             {
                 throw new ArgumentException(String.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
             }
-            else
-            {
-                components = new double[length];
-            }
+
+            components = new double[length];
         }
 
         public Vector(Vector vector)
@@ -27,28 +25,31 @@ namespace Academits.Dorosh.VectorTask
 
         public Vector(params double[] components)
         {
+            if (components.Length == 0)
+            {
+                throw new ArgumentException(String.Format("Размер массива [{0}]. Размерность не может быть меньше или равна 0", components.Length), nameof(components.Length));
+            }
+
             this.components = new double[components.Length];
             components.CopyTo(this.components, 0);
         }
 
         public Vector(int length, params double[] components)
         {
-            if (length <= 0)
+            if (length <= 0 && components.Length == 0)
             {
                 throw new ArgumentException(String.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
             }
+
+            this.components = new double[length];
+
+            if (components.Length >= length)
+            {
+                Array.Copy(components, this.components, length);
+            }
             else
             {
-                this.components = new double[length];
-
-                if (components.Length >= length)
-                {
-                    Array.Copy(components, this.components, length);
-                }
-                else
-                {
-                    Array.Copy(components, this.components, components.Length);
-                }
+                Array.Copy(components, this.components, components.Length);
             }
         }
 
