@@ -1,105 +1,122 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
-namespace Academits.Dorosh.CSV
+namespace Academits.Dorosh.Csv
 {
-    class CSVConverter
+    class CsvConverter
     {
-        public static void ToCSV(string input, string output)
+        public static void ConvertFromCsv(string input, string output = "..\\..\\output.html")
         {
-            using (StreamReader reader = new StreamReader(input))
+            try
             {
-                using (StreamWriter writer = new StreamWriter(output))
+                using (StreamReader reader = new StreamReader(input))
                 {
-                    writer.WriteLine("<html>");
-                    writer.WriteLine("<head><title>Таблица</title></head>");
-                    writer.WriteLine("<body>");
-                    writer.WriteLine("<table border=\"1\">");
-
-                    string currentLine;
-
-                    while ((currentLine = reader.ReadLine()) != null)
+                    using (StreamWriter writer = new StreamWriter(output))
                     {
-                        writer.Write("<tr><td>");
+                        writer.WriteLine("<!DOCTYPE HTML>");
+                        writer.WriteLine("<html>");
+                        writer.WriteLine("<head>");
+                        writer.WriteLine("<title>Таблица</title>");
+                        writer.WriteLine("<meta charset=\"utf-8\">");
+                        writer.WriteLine("</head>");
+                        writer.WriteLine("<body>");
+                        writer.WriteLine("<table border=\"1\">");
 
-                        for (int i = 0; i < currentLine.Length; i++)
+                        string currentLine;
+
+                        while ((currentLine = reader.ReadLine()) != null)
                         {
-                            if (currentLine[i].Equals(','))
+                            if (currentLine.Equals(""))
                             {
-                                writer.Write("</td><td>");
-
                                 continue;
                             }
 
-                            if (currentLine[i].Equals('<'))
+                            writer.Write("<tr><td>");
+
+                            for (int i = 0; i < currentLine.Length; i++)
                             {
-                                writer.Write("&lt");
-
-                                continue;
-                            }
-
-                            if (currentLine[i].Equals('>'))
-                            {
-                                writer.Write("&gt");
-
-                                continue;
-                            }
-
-                            if (currentLine[i].Equals('&'))
-                            {
-                                writer.Write("&amp");
-
-                                continue;
-                            }
-
-                            if (currentLine[i].Equals('"'))
-                            {
-                                i++;
-
-                                while (true)
+                                if (currentLine[i] == ',')
                                 {
-                                    if (i >= currentLine.Length || currentLine[i].Equals('\n'))
-                                    {
-                                        writer.Write("<br/>");
+                                    writer.Write("</td><td>");
 
-                                        currentLine = reader.ReadLine();
-
-                                        i = 0;
-
-                                        continue;
-                                    }
-
-                                    if (currentLine[i].Equals('"') && i + 1 < currentLine.Length && currentLine[i + 1].Equals('"'))
-                                    {
-                                        i += 2;
-
-                                        writer.Write("\"");
-
-                                        continue;
-                                    }
-
-                                    if (currentLine[i].Equals('"'))
-                                    {
-                                        break;
-                                    }
-
-                                    writer.Write(currentLine[i]);
-
-                                    i++;
+                                    continue;
                                 }
 
-                                continue;
+                                if (currentLine[i] == '<')
+                                {
+                                    writer.Write("&lt;");
+
+                                    continue;
+                                }
+
+                                if (currentLine[i] == '>')
+                                {
+                                    writer.Write("&gt;");
+
+                                    continue;
+                                }
+
+                                if (currentLine[i] == '&')
+                                {
+                                    writer.Write("&amp;");
+
+                                    continue;
+                                }
+
+                                if (currentLine[i] == '"')
+                                {
+                                    i++;
+
+                                    while (true)
+                                    {
+                                        if (i >= currentLine.Length)
+                                        {
+                                            writer.Write("<br/>");
+
+                                            currentLine = reader.ReadLine();
+
+                                            i = 0;
+
+                                            continue;
+                                        }
+
+                                        if (currentLine[i] == '"' && i + 1 < currentLine.Length && currentLine[i + 1] == '"')
+                                        {
+                                            i += 2;
+
+                                            writer.Write("\"");
+
+                                            continue;
+                                        }
+
+                                        if (currentLine[i] == '"')
+                                        {
+                                            break;
+                                        }
+
+                                        writer.Write(currentLine[i]);
+
+                                        i++;
+                                    }
+
+                                    continue;
+                                }
+
+                                writer.Write(currentLine[i]);
                             }
 
-                            writer.Write(currentLine[i]);
+                            writer.WriteLine("</td></tr>");
                         }
 
-                        writer.WriteLine("</td></tr>");
+                        writer.WriteLine("</table>");
+                        writer.WriteLine("</body>");
+                        writer.Write("</html>");
                     }
-
-                    writer.WriteLine("</table>");
-                    writer.WriteLine("</body>");
-                    writer.WriteLine("</html>");
                 }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }

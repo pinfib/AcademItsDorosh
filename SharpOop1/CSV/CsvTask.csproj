@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AC46CD2C-A3F9-4697-BB36-68C5660E28B6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CSV</RootNamespace>
-    <AssemblyName>CSV</AssemblyName>
+    <RootNamespace>CsvTask</RootNamespace>
+    <AssemblyName>CsvTask</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,9 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSVProgram.cs" />
+    <Compile Include="CsvProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CSVConverter.cs" />
+    <Compile Include="CsvConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

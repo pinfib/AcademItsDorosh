@@ -37,7 +37,7 @@ namespace Academits.Dorosh.ShapesTask.Shapes
             double sideAB = GetSideLength(PointA[0], PointA[1], PointB[0], PointB[1]);
             double sideBC = GetSideLength(PointB[0], PointB[1], PointC[0], PointC[1]);
             double sideAC = GetSideLength(PointA[0], PointA[1], PointC[0], PointC[1]);
-            double semiPerimeter = GetPerimeter() / 2;
+            double semiPerimeter = (sideAB + sideBC + sideAC) / 2;
 
             return Math.Sqrt(semiPerimeter * ((semiPerimeter - sideAB) * (semiPerimeter - sideBC) * (semiPerimeter - sideAC)));
         }

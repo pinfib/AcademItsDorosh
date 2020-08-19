@@ -7,7 +7,7 @@ namespace Academits.Dorosh.ShapesTask
 {
     class ShapesProgram
     {
-        public static IShape GetMaxShape(IShape[] shapes, IComparer<IShape> comparer, int positionNumber)
+        public static IShape GetShapeByPosition(IShape[] shapes, IComparer<IShape> comparer, int positionNumber)
         {
             Array.Sort(shapes, comparer);
 
@@ -24,7 +24,7 @@ namespace Academits.Dorosh.ShapesTask
 
         static void Main()
         {
-            IShape[] shapes = new IShape[]
+            IShape[] shapes =
             {
                 new Square(10),
                 new Square(10),
@@ -43,11 +43,11 @@ namespace Academits.Dorosh.ShapesTask
 
             Console.WriteLine();
             Console.WriteLine("Первая по площади фигура:");
-            Print(GetMaxShape(shapes, new ShapesAreaComparer(), 0));
+            Print(GetShapeByPosition(shapes, new ShapesAreaComparer(), 0));
 
             Console.WriteLine();
             Console.WriteLine("Вторая по периметру фигура:");
-            Print(GetMaxShape(shapes, new ShapesPerimeterComparer(), 1));
+            Print(GetShapeByPosition(shapes, new ShapesPerimeterComparer(), 1));
 
             Console.ReadLine();
         }

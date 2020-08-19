@@ -14,7 +14,7 @@ namespace Academits.Dorosh.VectorTask
             Console.WriteLine("Введите вектор 2");
             Vector vector2 = VectorCreation.GetVector();
 
-            //Vector vector1 = new Vector(4, 1, 1, 1, 1);
+            //Vector vector1 = new Vector(4, new double[] { 2, 2, 2, 2});
             //Vector vector2 = new Vector(4, 1, 1, 1, 1);
 
             Console.WriteLine();

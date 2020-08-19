@@ -1,14 +1,30 @@
-﻿namespace Academits.Dorosh.CSV
+﻿using System;
+
+namespace Academits.Dorosh.Csv
 {
-    class CSVProgram
+    class CsvProgram
     {
-        static void Main()
+        static void Main(string[] args)
         {
-            string input = "..\\..\\input.txt";
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Необходимо указать путь к исходному файлу.");
+            }
+            else if (args.Length == 1)
+            {
+                CsvConverter.ConvertFromCsv(args[0]);
 
-            string output = "..\\..\\output.html";
+                Console.WriteLine("Конвертирование выполнено.");
+            }
+            else
+            {
+                CsvConverter.ConvertFromCsv(args[0], args[1]);
 
-            CSVConverter.ToCSV(input, output);
+                Console.WriteLine("Конвертирование выполнено.");
+            }
+
+            Console.WriteLine("Нажмите любую клавишу...");
+            Console.ReadKey();
         }
     }
 }

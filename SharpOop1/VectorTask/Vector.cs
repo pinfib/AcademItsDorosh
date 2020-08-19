@@ -11,7 +11,7 @@ namespace Academits.Dorosh.VectorTask
         {
             if (length <= 0)
             {
-                throw new ArgumentException(String.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
+                throw new ArgumentException(string.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
             }
 
             components = new double[length];
@@ -27,7 +27,7 @@ namespace Academits.Dorosh.VectorTask
         {
             if (components.Length == 0)
             {
-                throw new ArgumentException(String.Format("Размер массива [{0}]. Размерность не может быть меньше или равна 0", components.Length), nameof(components.Length));
+                throw new ArgumentException(string.Format("Размер массива [{0}]. Размерность не может быть меньше или равна 0", components.Length), nameof(components.Length));
             }
 
             this.components = new double[components.Length];
@@ -38,19 +38,12 @@ namespace Academits.Dorosh.VectorTask
         {
             if (length <= 0 && components.Length == 0)
             {
-                throw new ArgumentException(String.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
+                throw new ArgumentException(string.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
             }
 
             this.components = new double[length];
 
-            if (components.Length >= length)
-            {
-                Array.Copy(components, this.components, length);
-            }
-            else
-            {
-                Array.Copy(components, this.components, components.Length);
-            }
+            Array.Copy(components, this.components, components.Length < length ? components.Length : length);
         }
 
         public int GetSize()
@@ -83,6 +76,21 @@ namespace Academits.Dorosh.VectorTask
 
         public void Add(Vector vector)
         {
+            int newSize = vector.GetSize();
+
+            if (GetSize() < newSize)
+            {
+                Array.Resize(ref components, newSize);
+            }
+
+            for (int i = 0; i < newSize; i++)
+            {
+                components[i] += vector.components[i];
+            }
+        }
+
+        public void Subtract(Vector vector)
+        {
             int size = vector.GetSize();
 
             if (GetSize() < size)
@@ -92,17 +100,8 @@ namespace Academits.Dorosh.VectorTask
 
             for (int i = 0; i < size; i++)
             {
-                components[i] += vector.components[i];
+                components[i] -= vector.components[i];
             }
-        }
-
-        public void Subtract(Vector vector)
-        {
-            Vector tmpVector = new Vector(vector.GetSize(), vector.components);
-
-            tmpVector.Negate();
-
-            Add(tmpVector);
         }
 
         public void MultiplyByNumber(double number)
@@ -144,9 +143,7 @@ namespace Academits.Dorosh.VectorTask
 
         public static Vector GetSum(Vector vector1, Vector vector2)
         {
-            Vector newVector = new Vector(Math.Max(vector1.GetSize(), vector2.GetSize()));
-
-            newVector.Add(vector1);
+            Vector newVector = new Vector(vector1);
             newVector.Add(vector2);
 
             return newVector;
@@ -154,9 +151,7 @@ namespace Academits.Dorosh.VectorTask
 
         public static Vector GetDifference(Vector vector1, Vector vector2)
         {
-            Vector newVector = new Vector(Math.Max(vector1.GetSize(), vector2.GetSize()));
-
-            newVector.Add(vector1);
+            Vector newVector = new Vector(vector1);
             newVector.Subtract(vector2);
 
             return newVector;
@@ -166,9 +161,9 @@ namespace Academits.Dorosh.VectorTask
         {
             double result = 0;
 
-            int size = Math.Min(vector1.GetSize(), vector2.GetSize());
+            int computationLength = Math.Min(vector1.GetSize(), vector2.GetSize());
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < computationLength; i++)
             {
                 result += vector1.components[i] * vector2.components[i];
             }
