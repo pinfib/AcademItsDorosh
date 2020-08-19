@@ -53,7 +53,7 @@ namespace Academits.Dorosh.MatrixTask
                 throw new ArgumentException("Передан пустой массив vectors, нельзя создать пустую матрицу.", nameof(vectors));
             }
 
-            int columns = vectors[0].GetSize();           // поиск максимальной длины вектора
+            int columns = vectors[0].GetSize();                 // поиск максимальной длины вектора
 
             foreach (Vector v in vectors)
             {
@@ -64,11 +64,11 @@ namespace Academits.Dorosh.MatrixTask
 
             for (int i = 0; i < vectors.Length; i++)
             {
-                lines[i] = new Vector(columns);         // все вектора матрицы объявить максимальной длины
+                lines[i] = new Vector(columns);                 // все вектора матрицы объявить максимальной длины
 
-                int size = vectors[i].GetSize();
+                int vectorLength = vectors[i].GetSize();
 
-                for (int j = 0; j < size; j++)          // заполнить вектор-строку, ограничение по длине исходного вектора
+                for (int j = 0; j < vectorLength; j++)          // заполнить вектор-строку, ограничение по длине исходного вектора
                 {
                     lines[i].SetComponent(j, vectors[i].GetComponent(j));
                 }
@@ -213,18 +213,18 @@ namespace Academits.Dorosh.MatrixTask
 
         public Vector GetMultiplicationByVector(Vector vector)
         {
-            int size = vector.GetSize();
+            int vectorLength = vector.GetSize();
             int columns = GetColumnsCount();
             int rows = GetRowsCount();
 
-            if (rows != size)
+            if (rows != vectorLength)
             {
-                throw new ArgumentException(string.Format("Размеры текущей матрицы: {0}x{1}, размерность вектора: {2}. Количество строк в матрице и размерность вертикального вектора должны совпадать.", columns, rows, size));
+                throw new ArgumentException(string.Format("Размеры текущей матрицы: {0}x{1}, размерность вектора: {2}. Количество строк в матрице и размерность вертикального вектора должны совпадать.", columns, rows, vectorLength));
             }
 
-            Vector tmpVector = new Vector(size);
+            Vector tmpVector = new Vector(vectorLength);
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < vectorLength; i++)
             {
                 double value = Vector.GetScalarMultiplication(lines[i], vector);
 
