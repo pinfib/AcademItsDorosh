@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace Academits.Dorosh.ArrayListTask
@@ -41,6 +42,8 @@ namespace Academits.Dorosh.ArrayListTask
                 _capacity = value;
             }
         }
+
+        private int modCount;
 
         public T this[int index]
         {
@@ -86,6 +89,8 @@ namespace Academits.Dorosh.ArrayListTask
             items[Count] = item;
 
             Count++;
+
+            modCount++;
         }
 
         private void IncreaseCapacity()
@@ -110,6 +115,8 @@ namespace Academits.Dorosh.ArrayListTask
         public void Clear()
         {
             Count = 0;
+
+            modCount++;
         }
 
         public bool Contains(T item)
@@ -160,6 +167,8 @@ namespace Academits.Dorosh.ArrayListTask
             items[index] = item;
 
             Count++;
+
+            modCount++;
         }
 
         public bool Remove(T item)
@@ -169,6 +178,8 @@ namespace Academits.Dorosh.ArrayListTask
             if (index >= 0)
             {
                 RemoveAt(index);
+
+                modCount++;
 
                 return true;
             }
@@ -189,6 +200,8 @@ namespace Academits.Dorosh.ArrayListTask
             }
 
             Count--;
+
+            modCount++;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -198,8 +211,15 @@ namespace Academits.Dorosh.ArrayListTask
 
         public IEnumerator<T> GetEnumerator()
         {
+            int currentModCount = modCount;
+
             for (int i = 0; i < Count; ++i)
             {
+                if(currentModCount != modCount)
+                {
+                    throw new InvalidOperationException("Список был изменен, нельзя продолжить цикл.");
+                }
+                
                 yield return items[i];
             }
         }
