@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Academits.Dorosh.ListTask
 {
@@ -10,49 +6,76 @@ namespace Academits.Dorosh.ListTask
     {
         static void Main(string[] args)
         {
-            ListItem<int> head = new ListItem<int>(0, null); 
+            CourseList<int> list = new CourseList<int>();
 
-            CourseList<int> list = new CourseList<int>(head);
+            list.Add(30);
+            list.Add(20);
+            list.Add(10);
+            list.Add(0);
 
-            list.Add(1);
-            list.Add(2);
-            list.Add(3);
-            /*
-            int index = 1;
-            Console.WriteLine(list.ToString());
-            Console.WriteLine("Значение в голове списка = {0}", list.GetValue());
-            Console.WriteLine("Значение по индексу {0} = {1}", index, list.GetValue(index));
+            try
+            {
+                int index = 3;
 
+                Console.WriteLine(list.ToString());
+                Console.WriteLine("Значение в голове списка = {0}", list.GetValue());
+                Console.WriteLine("Значение по индексу {0} = {1}", index, list.GetValue(index));
 
-            int item = -50;
-            list.SetValue(index, item);
+                Console.WriteLine();
 
-            Console.WriteLine(list.ToString());
+                int deletedItem = list.RemoveAt(index);
+                Console.WriteLine("Удаляется элемент по индексу {0}, он содержал значение {1}. Итоговый список: ", index, deletedItem);
+                Console.WriteLine(list.ToString());
 
-            list.SetValue(index, 2);
+                Console.WriteLine();
 
-            list.Insert(2, item);
+                list.Insert(index, deletedItem);
+                Console.WriteLine("Удаленный элемент вставлен обратно. Итоговый список: ");
+                Console.WriteLine(list.ToString());
 
-            Console.WriteLine(list.ToString());
+                Console.WriteLine();
 
-            list.Remove(item);
+                int item = -50;
+                list.Insert(index, item);
+                Console.WriteLine("В список по индексу {0} добавлен элемент [ {1} ]. Итоговый список: ", index, item);
+                Console.WriteLine(list.ToString());
 
-            Console.WriteLine(list.ToString());
+                Console.WriteLine();
 
-            list.RemoveFirst();
+                bool isDeleted = list.Remove(item);
+                Console.WriteLine("Удаляется элемент со значением [{0}]. Успешно? {1}. Итоговый список: ", item, isDeleted);
+                Console.WriteLine(list.ToString());
 
-            Console.WriteLine(list.ToString());
-            
+                Console.WriteLine();
 
-            list.Revers();
+                deletedItem = list.RemoveFirst();
+                Console.WriteLine("Удален первый элемент. Его значение [{0}]. Итоговый список: ", deletedItem);
+                Console.WriteLine(list.ToString());
 
-            Console.WriteLine(list.ToString());
-            */
+                Console.WriteLine();
 
-            CourseList<int> list2 = new CourseList<int>(new ListItem<int>(-50, null));
-            list.CopyTo(list2);
+                list.Revers();
+                Console.WriteLine("Разворот списка:");
+                Console.WriteLine(list.ToString());
 
-            Console.WriteLine(list2.ToString());
+                Console.WriteLine();
+
+                CourseList<int> list2 = new CourseList<int>();
+                list.CopyTo(list2);
+                Console.WriteLine("Копирование списка.");
+                Console.WriteLine("Исходный список: ");
+                Console.WriteLine(list.ToString());
+                Console.WriteLine("Новый спиок: ");
+                Console.WriteLine(list2.ToString());
+
+                Console.WriteLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine();
+                Console.WriteLine(e.Message);
+                Console.WriteLine();
+            }
 
             Console.ReadKey();
         }
