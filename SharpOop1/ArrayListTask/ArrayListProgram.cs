@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Academits.Dorosh.ArrayListTask
 {
@@ -10,35 +6,66 @@ namespace Academits.Dorosh.ArrayListTask
     {
         static void Main(string[] args)
         {
-            CourseArrayList<int> list = new CourseArrayList<int>();
+            CourseArrayList<int> list = new CourseArrayList<int> { 0, 1, 2, 3, 4 };
 
-            list.Add(0);
-            list.Add(1);
-            list.Add(2);
-            list.Add(3);
-            list.Add(4);
-            list.Add(5);
+            Console.WriteLine("Исходный список:");
+            Console.WriteLine(list);
 
-            Console.WriteLine("исходный список: " + list);
+            try
+            {
+                int element = 5;
 
-            //int[] array1 = new int[9];
-            //list.CopyTo(array1, 2);
-            //Console.WriteLine("массив: " + string.Join(", ", array1));
+                Console.WriteLine("Содержит ли список элемент {0}? {1}", element, list.Contains(element));
+                Console.WriteLine("Индекс элемента {0} - {1}", element, list.IndexOf(element));
+                Console.WriteLine();
 
-            //int element = 5;
-            //Console.WriteLine("Содержит ли список элемент {0}? {1}", element, list.Contains(element));
-            //Console.WriteLine("Индекс элемента {0} - {1}", element, list.IndexOf(element));
+                list.Add(element);
+                Console.WriteLine("Вставка элемента со значением [{0}] в конец:", element);
+                Console.WriteLine(list);
+                Console.WriteLine();
 
-            int element2 = -10;
-            int index = 3;
-            list.Insert(index, element2);
-            Console.WriteLine("Вставка по индексу: " + list);
+                list.Insert(list.Count, element);
+                Console.WriteLine("Вставка по индексу элемента со значением [{0}] в конец:", element);
+                Console.WriteLine(list);
+                Console.WriteLine();
 
-            //list.RemoveAt(index);
-            //Console.WriteLine("Удаление по индексу: " + list);
+                int index = 2;
 
-            list.Remove(element2);
-            Console.WriteLine("Удаление по значению: " + list);
+                list.Insert(index, element);
+                Console.WriteLine("Вставка элемента со значением [{0}] по индексу [{1}]:", element, index);
+                Console.WriteLine(list);
+                Console.WriteLine();
+
+                list.Remove(element);
+                Console.WriteLine("Удаление элемента со значением  [{0}]:", element);
+                Console.WriteLine(list);
+                Console.WriteLine();
+
+                list.RemoveAt(index);
+                Console.WriteLine("Удаление по индексу [{0}]:", index);
+                Console.WriteLine(list);
+                Console.WriteLine();
+
+                list.TrimExcess();
+                Console.WriteLine("Уменьшение вместимости:");
+                Console.WriteLine(list);
+                Console.WriteLine();
+
+                list.Add(5);
+                Console.WriteLine("Добавление элемента:");
+                Console.WriteLine(list);
+                Console.WriteLine();
+
+                Console.WriteLine("Тест итератора:");
+                foreach (int e in list)
+                {
+                    Console.WriteLine("foreach: {0}", e);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             Console.ReadKey();
         }
