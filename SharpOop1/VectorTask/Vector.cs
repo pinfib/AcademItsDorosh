@@ -11,7 +11,7 @@ namespace Academits.Dorosh.VectorTask
         {
             if (length <= 0)
             {
-                throw new ArgumentException(string.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
+                throw new ArgumentException($"Передано значение размерности [{length}]. Размерность не может быть меньше или равна 0", nameof(length));
             }
 
             components = new double[length];
@@ -27,7 +27,7 @@ namespace Academits.Dorosh.VectorTask
         {
             if (components.Length == 0)
             {
-                throw new ArgumentException(string.Format("Размер массива [{0}]. Размерность не может быть меньше или равна 0", components.Length), nameof(components.Length));
+                throw new ArgumentException($"Размер массива [{components.Length}]. Размерность не может быть меньше или равна 0", nameof(components.Length));
             }
 
             this.components = new double[components.Length];
@@ -36,14 +36,14 @@ namespace Academits.Dorosh.VectorTask
 
         public Vector(int length, params double[] components)
         {
-            if (length <= 0 && components.Length == 0)
+            if (length <= 0)
             {
-                throw new ArgumentException(string.Format("Передано значение размерности [{0}]. Размерность не может быть меньше или равна 0", length), nameof(length));
+                throw new ArgumentException($"Передано значение размерности [{length}]. Размерность не может быть меньше или равна 0", nameof(length));
             }
 
             this.components = new double[length];
 
-            Array.Copy(components, this.components, components.Length < length ? components.Length : length);
+            Array.Copy(components, this.components, Math.Min(components.Length, length));
         }
 
         public int GetSize()
@@ -53,25 +53,25 @@ namespace Academits.Dorosh.VectorTask
 
         public override string ToString()
         {
-            StringBuilder tmpString = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
 
-            tmpString.Append(" { ");
+            stringBuilder.Append("{ ");
 
             int size = GetSize();
 
             for (int i = 0; i < size; i++)
             {
-                tmpString.AppendFormat("{0, -4:0.##}", components[i]);
+                stringBuilder.AppendFormat("{0, -4:0.##}", components[i]);
 
                 if (i != size - 1)
                 {
-                    tmpString.Append("; ");
+                    stringBuilder.Append("; ");
                 }
             }
 
-            tmpString.Append(" } ");
+            stringBuilder.Append(" }");
 
-            return tmpString.ToString();
+            return stringBuilder.ToString();
         }
 
         public void Add(Vector vector)

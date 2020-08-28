@@ -6,21 +6,29 @@ namespace Academits.Dorosh.Csv
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                Console.WriteLine("Необходимо указать путь к исходному файлу.");
-            }
-            else if (args.Length == 1)
-            {
-                CsvConverter.ConvertFromCsv(args[0]);
 
-                Console.WriteLine("Конвертирование выполнено.");
-            }
-            else
+            try
             {
-                CsvConverter.ConvertFromCsv(args[0], args[1]);
+                if (args.Length == 0)
+                {
+                    Console.WriteLine("Необходимо указать путь к исходному файлу.");
+                }
+                else if (args.Length == 1)
+                {
+                    CsvConverter.ConvertFromCsv(args[0]);
 
-                Console.WriteLine("Конвертирование выполнено.");
+                    Console.WriteLine("Конвертирование выполнено.");
+                }
+                else
+                {
+                    CsvConverter.ConvertFromCsv(args[0], args[1]);
+
+                    Console.WriteLine("Конвертирование выполнено.");
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("ОШИБКА: {0}", e.Message);
             }
 
             Console.WriteLine("Нажмите любую клавишу...");

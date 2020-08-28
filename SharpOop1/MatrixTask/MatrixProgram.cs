@@ -22,11 +22,15 @@ namespace Academits.Dorosh.MatrixTask
                     {1, 1, 1, 1 },
                     {0, 1, 1, 1 },
                     {0, 0, 1, 1 },
-                    {0, 0, 0, 1 }
+                    {0, 0, 0, 1 },
+
                 };
 
                 Matrix matrix1 = new Matrix(vectors);
                 Matrix matrix2 = new Matrix(array);
+
+                //Console.WriteLine(matrix2.GetRow(4));
+                //Console.WriteLine(matrix2.GetColumn(3));
 
                 Console.WriteLine("Матрица 1:");
                 Console.WriteLine(matrix1);
@@ -103,8 +107,9 @@ namespace Academits.Dorosh.MatrixTask
                 Console.WriteLine("Матрица:");
                 Console.WriteLine(matrix6);
                 Console.WriteLine("Определитель: {0}", matrix6.GetDeterminant()); //определитель = -576
+                
             }
-            catch (ArgumentException e)
+            catch (Exception e)
             {
                 Console.WriteLine();
                 Console.WriteLine(e.Message);

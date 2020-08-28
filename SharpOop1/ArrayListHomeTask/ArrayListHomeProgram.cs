@@ -30,7 +30,7 @@ namespace Academits.Dorosh.ArrayListHomeTask
             }
             catch (FileNotFoundException e)
             {
-                Console.WriteLine("ОШИБКА: Файл не найден", e.Message);
+                Console.WriteLine("ОШИБКА: Файл не найден. {0}", e.Message);
             }
             catch (Exception e)
             {
@@ -57,9 +57,7 @@ namespace Academits.Dorosh.ArrayListHomeTask
             Console.WriteLine("=== 2 ===");
             Console.WriteLine();
 
-            List<int> integersList = new List<int>();
-
-            integersList.AddRange(new int[] { 1, 2, 2, 2, 3 });
+            List<int> integersList = new List<int> { 1, 2, 2, 2, 3 };
 
             Console.WriteLine("Исходный список: ");
             Console.WriteLine(string.Join(", ", integersList));
@@ -89,16 +87,14 @@ namespace Academits.Dorosh.ArrayListHomeTask
             Console.WriteLine("=== 3 ===");
             Console.WriteLine();
 
-            integersList.Clear();
-
-            integersList.AddRange(new int[] { 50, 1, 2, 3, 4, 5, 2, 3, 7, 8, 9 });
+            List<int> mixedIntegersList = new List<int> { 50, 1, 2, 3, 4, 5, 2, 3, 7, 8, 9 };
 
             Console.WriteLine("Исходный список: ");
-            Console.WriteLine(string.Join(", ", integersList));
+            Console.WriteLine(string.Join(", ", mixedIntegersList));
 
-            List<int> uniqueIntegersList = new List<int>();
+            List<int> uniqueIntegersList = new List<int>(mixedIntegersList.Count);
 
-            foreach (int e in integersList)
+            foreach (int e in mixedIntegersList)
             {
                 if (!uniqueIntegersList.Contains(e))
                 {
