@@ -6,9 +6,7 @@ namespace Academits.Dorosh.ArrayListTask
     {
         static void Main(string[] args)
         {
-            // ArrayList<string> list = new ArrayList<string>(0);
-
-            ArrayList<string> list = new ArrayList<string> { "5", null, "3", "", "1" };
+            ArrayList<string> list = new ArrayList<string>(0) { "5", null, "3", "", "1" };
 
             Console.WriteLine($"Исходный список: {list}");
 
