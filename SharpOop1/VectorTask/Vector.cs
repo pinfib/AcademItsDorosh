@@ -43,7 +43,10 @@ namespace Academits.Dorosh.VectorTask
 
             this.components = new double[length];
 
-            Array.Copy(components, this.components, Math.Min(components.Length, length));
+            if (components != null && components.Length > 0)
+            {
+                Array.Copy(components, this.components, Math.Min(components.Length, length));
+            }
         }
 
         public int GetSize()

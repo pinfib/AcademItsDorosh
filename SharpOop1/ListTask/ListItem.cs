@@ -19,11 +19,11 @@
 
         public override string ToString()
         {
-            if(Data == null)
+            if (Data == null)
             {
                 return "";
             }
-            
+
             return Data.ToString();
         }
     }

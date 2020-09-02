@@ -161,7 +161,7 @@ namespace Academits.Dorosh.ListTask
 
         public T RemoveFirst()                      // Выдает старое значение
         {
-            if (Head == null)       
+            if (Head == null)
             {
                 throw new InvalidOperationException("Список пуст");
             }

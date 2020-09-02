@@ -4,7 +4,7 @@ namespace Academits.Dorosh.ListTask
 {
     class ListProgram
     {
-        public static void MethodsTests(List<int> list)
+        public static void MethodsTest(List<int> list)
         {
             Console.WriteLine($"Исходный список: {list}");
             Console.WriteLine();
@@ -68,7 +68,7 @@ namespace Academits.Dorosh.ListTask
             list.AddFirst(10);
             list.AddFirst(0);
 
-            MethodsTests(list);
+            MethodsTest(list);
 
             /*
             try // тест копирования
