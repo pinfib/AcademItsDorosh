@@ -8,6 +8,7 @@ namespace Academits.Dorosh.HashTableTask
         {
             CourseHashTable<string> hashTable = new CourseHashTable<string>(5);
 
+            hashTable.Add(null);
             hashTable.Add("Москва");
             hashTable.Add("Екатеринбург");
             hashTable.Add("Киров");
@@ -26,10 +27,10 @@ namespace Academits.Dorosh.HashTableTask
 
             try
             {
-                string[] array = new string[20];
+                string[] array = new string[10];
                 hashTable.CopyTo(array, 0);
                 Console.WriteLine("Копирование в массив. Итоговый массив: ");
-                Console.WriteLine(string.Join(" ", array));
+                Console.WriteLine(string.Join(", ", array));
                 Console.WriteLine();
 
                 Console.WriteLine("Тест итератора:");

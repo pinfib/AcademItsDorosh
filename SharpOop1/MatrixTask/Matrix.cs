@@ -98,7 +98,7 @@ namespace Academits.Dorosh.MatrixTask
 
             if (index < 0 || index >= rowsCount)
             {
-                throw new ArgumentOutOfRangeException($"Передан индекс [{index}]. Допустимое значение индекса от 0 до {rowsCount - 1}.", nameof(index));
+                throw new IndexOutOfRangeException($"Передан индекс [{index}]. Допустимое значение индекса от 0 до {rowsCount - 1}.");
             }
 
             return new Vector(rows[index]);
@@ -110,7 +110,7 @@ namespace Academits.Dorosh.MatrixTask
 
             if (index < 0 || index >= columnsCount)
             {
-                throw new ArgumentOutOfRangeException($"Передан индекс [{index}]. Допустимое значение индекса от 0 до {columnsCount - 1}.", nameof(index));
+                throw new IndexOutOfRangeException($"Передан индекс [{index}]. Допустимое значение индекса от 0 до {columnsCount - 1}.");
             }
 
             int rowsCount = GetRowsCount();
@@ -139,7 +139,7 @@ namespace Academits.Dorosh.MatrixTask
 
             if (index < 0 || index >= rowsCount)
             {
-                throw new ArgumentOutOfRangeException($"Передан индекс [{index}]. Допустимое значение индекса от 0 до {rowsCount - 1}.", nameof(index));
+                throw new IndexOutOfRangeException($"Передан индекс [{index}]. Допустимое значение индекса от 0 до {rowsCount - 1}.");
             }
 
             rows[index] = new Vector(vector);

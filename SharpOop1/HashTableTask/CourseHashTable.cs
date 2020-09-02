@@ -7,126 +7,121 @@ namespace Academits.Dorosh.HashTableTask
 {
     class CourseHashTable<T> : ICollection<T>
     {
-        private List<T>[] data;
+        private List<T>[] _data;
 
-        private int modCount;
+        private int _modCount;
 
-        private int length;
+        public int Count { get; private set; }
 
-        public int Count
-        {
-            get
-            {
-                return length;
-            }
-            set
-            {
-                if (value >= 0)
-                {
-                    length = value;
-                }
-            }
-        }
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public CourseHashTable()
         {
-            int capacity = 20;
+            int arrayLength = 20;
 
-            data = new List<T>[capacity];
+            _data = new List<T>[arrayLength];
 
-            for (int i = 0; i < capacity; i++)
+            for (int i = 0; i < arrayLength; i++)
             {
-                data[i] = new List<T>();
+                _data[i] = new List<T>();
             }
         }
 
-        public CourseHashTable(int capacity)
+        public CourseHashTable(int arrayLength)
         {
-            data = new List<T>[capacity];
-
-            for (int i = 0; i < capacity; i++)
+            if (arrayLength >= 0)
             {
-                data[i] = new List<T>();
+                _data = new List<T>[arrayLength];
+
+                for (int i = 0; i < arrayLength; i++)
+                {
+                    _data[i] = new List<T>();
+                }
             }
         }
 
         private int GetKey(T item)
         {
-            return Math.Abs(item.GetHashCode() % data.Length);
+            if (item == null)
+            {
+                return 0;
+            }
+
+            return Math.Abs(item.GetHashCode() % _data.Length);
         }
 
         public void Add(T item)
         {
             int key = GetKey(item);
 
-            data[key].Add(item);
+            _data[key].Add(item);
 
             Count++;
 
-            modCount++;
+            _modCount++;
         }
 
         public void Clear()
         {
-            foreach (List<T> e in data)
+            foreach (List<T> e in _data)
             {
                 e.Clear();
             }
 
             Count = 0;
 
-            modCount++;
+            _modCount++;
         }
 
         public bool Contains(T item)
         {
             int key = GetKey(item);
 
-            return data[key].Contains(item);
+            return _data[key].Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException("array имеет значение null");
+            }
+
+            if (arrayIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException("Значение параметра arrayIndex меньше 0.");
+            }
+
             if (array.Length < arrayIndex + Count)
             {
-                throw new ArgumentException(string.Format("Целевой массив размера {0}, в него нельзя скопировать еще {1} элементов", array.Length, Count), nameof(array));
+                throw new ArgumentException("Число элементов в исходной коллекции ICollection<T> больше доступного места от положения, заданного значением параметра arrayIndex, до конца массива назначения array.");
             }
 
             int currentIndex = arrayIndex;
 
-            foreach (List<T> e in data)
+            foreach (T data in this)
             {
-                int listCount = e.Count;
+                array[currentIndex] = data;
 
-                e.CopyTo(array, currentIndex);
-
-                currentIndex += listCount;
+                currentIndex++;
             }
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            int currentModCount = modCount;
+            int currentModCount = _modCount;
 
-            for (int i = 0; i < data.Length; i++)
+            foreach (List<T> list in _data)
             {
-                if (currentModCount != modCount)
+                if (list != null)
                 {
-                    throw new InvalidOperationException("Список был изменен, нельзя продолжить цикл.");
-                }
-
-                if (data[i] != null)
-                {
-                    foreach (T e in data[i])
+                    foreach (T e in list)
                     {
+                        if (currentModCount != _modCount)
+                        {
+                            throw new InvalidOperationException("Список был изменен, нельзя продолжить цикл.");
+                        }
+
                         yield return e;
                     }
                 }
@@ -137,13 +132,13 @@ namespace Academits.Dorosh.HashTableTask
         {
             int key = GetKey(item);
 
-            bool isDeleted = data[key].Remove(item);
+            bool isDeleted = _data[key].Remove(item);
 
             if (isDeleted)
             {
                 Count--;
 
-                modCount++;
+                _modCount++;
             }
 
             return isDeleted;
@@ -156,29 +151,29 @@ namespace Academits.Dorosh.HashTableTask
 
         public override string ToString()
         {
-            StringBuilder tmpString = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < _data.Length; i++)
             {
-                tmpString.Append(i);
-                tmpString.Append(" - ");
+                stringBuilder.Append(i);
+                stringBuilder.Append(" - ");
 
-                if (data[i].Count == 0)
+                if (_data[i].Count == 0)
                 {
-                    tmpString.Append("пусто");
+                    stringBuilder.Append("пусто");
                 }
                 else
                 {
-                    foreach (T e in data[i])
+                    foreach (T e in _data[i])
                     {
-                        tmpString.AppendFormat("[ {0} ] ", e);
+                        stringBuilder.Append($"[ {e} ] ");
                     }
                 }
 
-                tmpString.AppendLine();
+                stringBuilder.AppendLine();
             }
 
-            return tmpString.ToString();
+            return stringBuilder.ToString();
         }
     }
 }
