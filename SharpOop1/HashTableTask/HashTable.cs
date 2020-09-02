@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Academits.Dorosh.HashTableTask
 {
-    class CourseHashTable<T> : ICollection<T>
+    class HashTable<T> : ICollection<T>
     {
         private List<T>[] _data;
 
@@ -15,7 +15,7 @@ namespace Academits.Dorosh.HashTableTask
 
         public bool IsReadOnly => false;
 
-        public CourseHashTable()
+        public HashTable()
         {
             int arrayLength = 20;
 
@@ -27,7 +27,7 @@ namespace Academits.Dorosh.HashTableTask
             }
         }
 
-        public CourseHashTable(int arrayLength)
+        public HashTable(int arrayLength)
         {
             if (arrayLength >= 0)
             {

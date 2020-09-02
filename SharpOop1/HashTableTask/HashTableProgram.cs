@@ -6,7 +6,7 @@ namespace Academits.Dorosh.HashTableTask
     {
         static void Main()
         {
-            CourseHashTable<string> hashTable = new CourseHashTable<string>(5);
+            HashTable<string> hashTable = new HashTable<string>(5);
 
             hashTable.Add(null);
             hashTable.Add("Москва");
