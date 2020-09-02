@@ -2,9 +2,26 @@
 {
     public class Person
     {
-        //private string _name;
+        private string _name;
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _name = "";
+                }
+                else
+                {
+                    _name = value;
+                }
+            }
+        }
 
         private int _age;
 
@@ -16,7 +33,11 @@
             }
             set
             {
-                if (value > 0)
+                if (value < 0)
+                {
+                    _age = 0;
+                }
+                else
                 {
                     _age = value;
                 }

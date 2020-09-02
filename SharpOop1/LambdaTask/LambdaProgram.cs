@@ -44,10 +44,16 @@ namespace Academits.Dorosh.LambdaTask
             catch (Exception e)
             {
                 Console.WriteLine($"Ошибка: {e.Message}");
-                Console.WriteLine($"Будет использовано значение [{numbersCount}]");
+                Console.WriteLine($"Возвращено значение [{numbersCount}]");
             }
 
-            return Math.Abs(numbersCount);
+            if (numbersCount < 0)
+            {
+                Console.WriteLine("Нельзя вводить отрицательное число. Возвращено значение по модулю.");
+                return Math.Abs(numbersCount);
+            }
+
+            return numbersCount;
         }
 
         static void Main()
@@ -66,6 +72,7 @@ namespace Academits.Dorosh.LambdaTask
                 new Person("Олег", 45),
                 new Person("Анна", 50),
                 new Person("Иван", 60),
+                new Person(null, 0)
             };
 
             // А) получить список уникальных имен
@@ -85,13 +92,20 @@ namespace Academits.Dorosh.LambdaTask
 
             // В) получить список людей младше 18, посчитать для них средний возраст
 
-            var averageAge = peopleList
-                .Where(p => p.Age < 18)
-                .Average(p => p.Age);
+            try
+            {
+                var averageAge = peopleList
+                    .Where(p => p.Age < 18)
+                    .Average(p => p.Age);
 
-            Console.WriteLine("В) Средний возраст людей младше 18");
-            Console.WriteLine($"Средний возраст: {averageAge}");
-            Console.WriteLine();
+                Console.WriteLine("В) Средний возраст людей младше 18");
+                Console.WriteLine($"Средний возраст: {averageAge}");
+                Console.WriteLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             // Г) при помощи группировки получить Map, в котором ключи – имена, а значения – средний возраст
 
