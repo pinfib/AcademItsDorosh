@@ -102,15 +102,16 @@ namespace Academits.Dorosh.MatrixTask
 
         static void Main()
         {
-            Vector[] vectors =
+
+            double[,] array1 =
             {
-                new Vector(1.0),
-                new Vector(1.0, 1.0),
-                new Vector(1.0, 1.0, 1.0),
-                new Vector(1.0, 1.0, 1.0, 1.0)
+                {1, 0, 0, 0 },
+                {1, 1, 0, 0 },
+                {1, 1, 1, 0 },
+                {1, 1, 1, 1 },
             };
 
-            double[,] array =
+            double[,] array2 =
             {
                 {1, 1, 1, 1 },
                 {0, 1, 1, 1 },
@@ -118,9 +119,9 @@ namespace Academits.Dorosh.MatrixTask
                 {0, 0, 0, 1 },
             };
 
-            
-            Matrix matrix1 = new Matrix(vectors);
-            Matrix matrix2 = new Matrix(array);
+
+            Matrix matrix1 = new Matrix(array1);
+            Matrix matrix2 = new Matrix(array2);
 
             BinaryMethodsTests(matrix1, matrix2);
 

@@ -8,7 +8,7 @@ namespace Academits.Dorosh.LambdaTask
     {
         public static IEnumerable<double> GetSquareRoots()
         {
-            int i = 0;
+            var i = 0;
 
             while (true)
             {
@@ -20,22 +20,26 @@ namespace Academits.Dorosh.LambdaTask
 
         public static IEnumerable<int> GetFibonacciNumbers()
         {
-            int previousNumber = 0;
-            int currentNumber = 1;
+            var previousNumber = 0;
+            var currentNumber = 1;
 
             yield return currentNumber;     // первое число фибоначчи - 1
 
             while (true)
             {
-                yield return currentNumber += previousNumber;
+                currentNumber += previousNumber;
+
+                yield return currentNumber;
 
                 previousNumber = currentNumber - previousNumber;
             }
         }
 
-        public static int GetNumbersCount()
+        public static int GetNumbersCount(string message)
         {
-            int numbersCount = 10;
+            Console.WriteLine(message);
+
+            var numbersCount = 10;
 
             try
             {
@@ -127,7 +131,7 @@ namespace Academits.Dorosh.LambdaTask
             // Д) получить людей, возраст которых от 20 до 45, вывести в консоль их имена в порядке убывания возраста
 
             var adultPeople = peopleList
-                .Where(p => p.Age > 19 && p.Age < 46)
+                .Where(p => p.Age >= 20 && p.Age <= 45)
                 .OrderByDescending(p => p.Age)
                 .ToList();
 
@@ -140,8 +144,7 @@ namespace Academits.Dorosh.LambdaTask
             Console.WriteLine("ЗАДАЧА 2)");
             Console.WriteLine("А) Бесконечный поток корней чисел");
 
-            Console.Write("Введите количество чисел, из которых будут извлечены корни: ");
-            var numbersCount = GetNumbersCount();
+            var numbersCount = GetNumbersCount("Введите количество чисел, из которых будут извлечены корни: ");
             Console.WriteLine();
 
             foreach (var e in GetSquareRoots().Take(numbersCount))
@@ -154,8 +157,7 @@ namespace Academits.Dorosh.LambdaTask
             Console.WriteLine("Б) Бесконечный поток чисел Фибоначчи");
             Console.WriteLine();
 
-            Console.Write("Введите количество чисел Фибоначчи: ");
-            numbersCount = GetNumbersCount();
+            numbersCount = GetNumbersCount("Введите количество чисел Фибоначчи: ");
             Console.WriteLine();
 
             foreach (var e in GetFibonacciNumbers().Take(numbersCount))

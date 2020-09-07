@@ -4,6 +4,8 @@
     {
         private string _name;
 
+        private int _age;
+
         public string Name
         {
             get
@@ -22,8 +24,6 @@
                 }
             }
         }
-
-        private int _age;
 
         public int Age
         {
