@@ -41,6 +41,11 @@ namespace Academits.Dorosh.VectorTask
                 throw new ArgumentException($"Передано значение размерности [{length}]. Размерность не может быть меньше или равна 0", nameof(length));
             }
 
+            if (components == null)
+            {
+                throw new ArgumentNullException(nameof(length), "Переданный массив - null");
+            }
+
             this.components = new double[length];
 
             if (components != null && components.Length > 0)
