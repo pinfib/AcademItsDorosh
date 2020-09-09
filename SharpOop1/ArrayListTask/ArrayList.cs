@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Text;
 
 namespace Academits.Dorosh.ArrayListTask
@@ -46,12 +45,12 @@ namespace Academits.Dorosh.ArrayListTask
             }
             set
             {
-                if(index < 0)
+                if (index < 0)
                 {
                     throw new ArgumentOutOfRangeException("Значение параметра index меньше нуля.");
                 }
 
-                if(index > Count)
+                if (index > Count)
                 {
                     throw new ArgumentOutOfRangeException("Значение параметра index больше значения свойства Count.");
                 }
