@@ -45,14 +45,14 @@ namespace Academits.Dorosh.ArrayListTask
             }
             set
             {
-                if (index < 0)
+                if (index < 0 || index > Count)
                 {
-                    throw new ArgumentOutOfRangeException("Значение параметра index меньше нуля.");
+                    throw new ArgumentOutOfRangeException("Недопустимое значение индекса");
                 }
 
-                if (index > Count)
+                if(IsReadOnly)
                 {
-                    throw new ArgumentOutOfRangeException("Значение параметра index больше значения свойства Count.");
+                    throw new NotSupportedException("Cписок доступен только для чтения.");
                 }
 
                 _items[index] = value;
@@ -63,9 +63,8 @@ namespace Academits.Dorosh.ArrayListTask
 
         public bool IsReadOnly => false;
 
-        public ArrayList()
+        public ArrayList() : this(5)
         {
-            _items = new T[5];
         }
 
         public ArrayList(int capacity)
