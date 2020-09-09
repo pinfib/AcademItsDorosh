@@ -13,7 +13,7 @@ namespace Academits.Dorosh.HashTableTask
 
         public int Count { get; private set; }
 
-        public bool IsReadOnly => true;
+        public bool IsReadOnly => false;
 
         public HashTable() : this(20)
         {
