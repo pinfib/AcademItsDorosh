@@ -15,7 +15,9 @@ namespace Academits.Dorosh.ArrayListTask
             try
             {
                 Console.WriteLine($"Содержит ли список элемент {element}? {list.Contains(element)}");
-                Console.WriteLine($"Индекс элемента {element} - {list.IndexOf(null)}");
+                Console.WriteLine($"Индекс элемента {element} - {list.IndexOf(element)}");
+                Console.WriteLine($"Содержит ли список элемент -111 - {list.Contains("-111")}");
+                Console.WriteLine($"Индекс элемента null - {list.IndexOf(null)}");
                 Console.WriteLine();
             }
             catch (Exception e)

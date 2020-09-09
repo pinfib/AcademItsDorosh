@@ -7,36 +7,30 @@ namespace Academits.Dorosh.HashTableTask
 {
     class HashTable<T> : ICollection<T>
     {
-        private List<T>[] _data;
+        readonly private List<T>[] _data;
 
         private int _modCount;
 
         public int Count { get; private set; }
 
-        public bool IsReadOnly => false;
+        public bool IsReadOnly => true;
 
-        public HashTable()
+        public HashTable() : this(20)
         {
-            int arrayLength = 20;
+        }
+
+        public HashTable(int arrayLength)
+        {
+            if (arrayLength <= 0)
+            {
+                throw new ArgumentException("Массив хэш-таблицы не может быть меньше или равен нулю", nameof(arrayLength));
+            }
 
             _data = new List<T>[arrayLength];
 
             for (int i = 0; i < arrayLength; i++)
             {
                 _data[i] = new List<T>();
-            }
-        }
-
-        public HashTable(int arrayLength)
-        {
-            if (arrayLength >= 0)
-            {
-                _data = new List<T>[arrayLength];
-
-                for (int i = 0; i < arrayLength; i++)
-                {
-                    _data[i] = new List<T>();
-                }
             }
         }
 
@@ -107,27 +101,6 @@ namespace Academits.Dorosh.HashTableTask
             }
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            int currentModCount = _modCount;
-
-            foreach (List<T> list in _data)
-            {
-                if (list != null)
-                {
-                    foreach (T e in list)
-                    {
-                        if (currentModCount != _modCount)
-                        {
-                            throw new InvalidOperationException("Список был изменен, нельзя продолжить цикл.");
-                        }
-
-                        yield return e;
-                    }
-                }
-            }
-        }
-
         public bool Remove(T item)
         {
             int key = GetKey(item);
@@ -142,6 +115,24 @@ namespace Academits.Dorosh.HashTableTask
             }
 
             return isDeleted;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            int currentModCount = _modCount;
+
+            foreach (List<T> list in _data)
+            {
+                foreach (T e in list)
+                {
+                    if (currentModCount != _modCount)
+                    {
+                        throw new InvalidOperationException("Список был изменен, нельзя продолжить цикл.");
+                    }
+
+                    yield return e;
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

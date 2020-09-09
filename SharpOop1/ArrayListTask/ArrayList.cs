@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace Academits.Dorosh.ArrayListTask
@@ -9,15 +10,15 @@ namespace Academits.Dorosh.ArrayListTask
     {
         private T[] _items;
 
-        public int Count { get; private set; }
+        private int _modCount;
 
-        private int _capacity;
+        public int Count { get; private set; }
 
         private int Capacity
         {
             get
             {
-                return _capacity;
+                return _items.Length;
             }
             set
             {
@@ -26,20 +27,16 @@ namespace Academits.Dorosh.ArrayListTask
                     throw new ArgumentException($"Передано значение вместимости {value}, количество элементов в списке {Count}. Вместимость нельзя установить меньше количества элементов.");
                 }
 
-                if (_capacity == value)
+                if (_items.Length == value)
                 {
                     return;
                 }
 
                 Array.Resize(ref _items, value);
 
-                _capacity = value;
-
                 _modCount++;
             }
         }
-
-        private int _modCount;
 
         public T this[int index]
         {
@@ -49,6 +46,16 @@ namespace Academits.Dorosh.ArrayListTask
             }
             set
             {
+                if(index < 0)
+                {
+                    throw new ArgumentOutOfRangeException("Значение параметра index меньше нуля.");
+                }
+
+                if(index > Count)
+                {
+                    throw new ArgumentOutOfRangeException("Значение параметра index больше значения свойства Count.");
+                }
+
                 _items[index] = value;
 
                 _modCount++;
@@ -59,21 +66,17 @@ namespace Academits.Dorosh.ArrayListTask
 
         public ArrayList()
         {
-            _capacity = 5;
-
-            _items = new T[Capacity];
+            _items = new T[5];
         }
 
         public ArrayList(int capacity)
         {
             if (capacity < 0)
             {
-                capacity = 0;
+                throw new ArgumentOutOfRangeException("Значение параметра capacity меньше нуля.");
             }
 
-            _capacity = capacity;
-
-            _items = new T[Capacity];
+            _items = new T[capacity];
         }
 
         public void Add(T item)
@@ -116,12 +119,7 @@ namespace Academits.Dorosh.ArrayListTask
 
         public bool Contains(T item)
         {
-            if (IndexOf(item) == -1)
-            {
-                return false;
-            }
-
-            return true;
+            return IndexOf(item) >= 0;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -148,12 +146,7 @@ namespace Academits.Dorosh.ArrayListTask
         {
             for (int i = 0; i < Count; i++)
             {
-                if (_items[i] == null && item == null)
-                {
-                    return i;
-                }
-
-                if (_items[i] != null && _items[i].Equals(item))
+                if (object.Equals(_items[i], item))
                 {
                     return i;
                 }
