@@ -25,7 +25,7 @@ namespace Academits.Dorosh.MatrixTask
                     {
                         case 0:
                             Console.WriteLine("=== Умножение (статический): ===");
-                            Console.WriteLine(Matrix.GetMultiplication(matrix1, matrix2));
+                            Console.WriteLine(Matrix.GetProduct(matrix1, matrix2));
                             break;
                         case 1:
                             Console.WriteLine("=== Сложение (статический): ===");
@@ -141,7 +141,7 @@ namespace Academits.Dorosh.MatrixTask
                 Vector vector = new Vector(2.0, 2.0, 2.0, 2.0);
 
                 Console.WriteLine("=== Умножение на вертикальный вектор: ===");
-                Console.WriteLine(matrix1.GetMultiplicationByVector(vector));
+                Console.WriteLine(matrix1.MultiplyByVector(vector));
                 Console.WriteLine();
             }
             catch (Exception e)
@@ -151,7 +151,7 @@ namespace Academits.Dorosh.MatrixTask
                 Console.WriteLine();
             }
 
-            /*
+            /*  
             // Тест индексов
             Matrix matrix4 = new Matrix(new double[,]
             {

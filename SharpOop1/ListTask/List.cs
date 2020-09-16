@@ -5,7 +5,7 @@ namespace Academits.Dorosh.ListTask
 {
     public class List<T>
     {
-        private ListItem<T> Head { get; set; }
+        private ListItem<T> _head;
 
         public int Count { get; private set; }
 
@@ -15,12 +15,17 @@ namespace Academits.Dorosh.ListTask
 
         public List(T data)
         {
-            Head = new ListItem<T>(data);
+            _head = new ListItem<T>(data);
         }
 
         private ListItem<T> GetListItemByIndex(int index)
         {
-            ListItem<T> current = Head;
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), $"Передан индекс [{index}], допустимые значения индекса от 0 до {Count - 1}.");
+            }
+
+            ListItem<T> current = _head;
 
             for (int i = 0; i != index; i++)
             {
@@ -30,28 +35,18 @@ namespace Academits.Dorosh.ListTask
             return current;
         }
 
-        public int GetSize()
-        {
-            return Count;
-        }
-
         public T GetFirstValue()
         {
-            if (Head == null)
+            if (_head == null)
             {
                 throw new InvalidOperationException("Список пуст");
             }
 
-            return Head.Data;
+            return _head.Data;
         }
 
         public T GetValue(int index)
         {
-            if (index >= Count || index < 0)
-            {
-                throw new ArgumentOutOfRangeException($"Передан индекс [{index}], длина списка - {Count}");
-            }
-
             ListItem<T> listItem = GetListItemByIndex(index);
 
             return listItem.Data;
@@ -59,11 +54,6 @@ namespace Academits.Dorosh.ListTask
 
         public T SetValue(int index, T data)        // Выдает старое значение
         {
-            if (index >= Count || index < 0)
-            {
-                throw new ArgumentOutOfRangeException($"Передан индекс [{index}], длина списка - {Count}");
-            }
-
             ListItem<T> listItem = GetListItemByIndex(index);
 
             T oldData = listItem.Data;
@@ -72,32 +62,25 @@ namespace Academits.Dorosh.ListTask
             return oldData;
         }
 
-        public void AddFirst(T item)
+        public void AddFirst(T data)
         {
-            ListItem<T> tmpItem = new ListItem<T>(item, Head);
-
-            Head = tmpItem;
+            _head = new ListItem<T>(data, _head);
 
             Count++;
         }
 
-        public void Insert(int index, T item)
+        public void Insert(int index, T data)
         {
-            if (index > Count || index < 0)
-            {
-                throw new ArgumentOutOfRangeException($"Передан индекс [{index}], длина списка - {Count}");
-            }
-
             if (index == 0)
             {
-                AddFirst(item);
+                AddFirst(data);
             }
             else
             {
                 ListItem<T> previous = GetListItemByIndex(index - 1);
                 ListItem<T> current = previous.Next;
 
-                previous.Next = new ListItem<T>(item, current);
+                previous.Next = new ListItem<T>(data, current);
 
                 Count++;
             }
@@ -105,11 +88,6 @@ namespace Academits.Dorosh.ListTask
 
         public T RemoveAt(int index)                // Выдает старое значение
         {
-            if (index >= Count || index < 0)
-            {
-                throw new ArgumentOutOfRangeException($"Передан индекс [{index}], длина списка - {Count}");
-            }
-
             T oldData;
 
             if (index == 0)
@@ -130,16 +108,16 @@ namespace Academits.Dorosh.ListTask
             return oldData;
         }
 
-        public bool Remove(T item)                  // Выдает true, если элемент был удален
+        public bool Remove(T data)                  // Выдает true, если элемент был удален
         {
-            if (Head == null)
+            if (_head == null)
             {
                 return false;
             }
 
-            for (ListItem<T> current = Head, previous = null; current != null; previous = current, current = current.Next)
+            for (ListItem<T> current = _head, previous = null; current != null; previous = current, current = current.Next)
             {
-                if (current.Data.Equals(item))
+                if (Equals(current.Data, data))
                 {
                     if (previous == null)
                     {
@@ -148,9 +126,9 @@ namespace Academits.Dorosh.ListTask
                     else
                     {
                         previous.Next = current.Next;
-                    }
 
-                    Count--;
+                        Count--;
+                    }
 
                     return true;
                 }
@@ -161,14 +139,14 @@ namespace Academits.Dorosh.ListTask
 
         public T RemoveFirst()                      // Выдает старое значение
         {
-            if (Head == null)
+            if (_head == null)
             {
                 throw new InvalidOperationException("Список пуст");
             }
 
-            T oldData = Head.Data;
+            T oldData = _head.Data;
 
-            Head = Head.Next;
+            _head = _head.Next;
 
             Count--;
 
@@ -177,43 +155,43 @@ namespace Academits.Dorosh.ListTask
 
         public void Reverse()
         {
-            if (Head == null || Head.Next == null) // список пуст или состоит из одного элемента
+            if (_head == null || _head.Next == null) // список пуст или состоит из одного элемента
             {
                 return;
             }
 
-            ListItem<T> current = Head.Next;
-            Head.Next = null;
+            ListItem<T> current = _head.Next;
+            _head.Next = null;
 
             while (current != null)
             {
                 ListItem<T> next = current.Next;    // сохранить ссылку на следущий элемент после текущего
-                current.Next = Head;                // поменять местами текущий элемент и голову
-                Head = current;
+                current.Next = _head;                // поменять местами текущий элемент и голову
+                _head = current;
                 current = next;                     // текущий элемент указывает на оставшуюся часть списка
             }
         }
 
-        public List<T> CopyTo()
+        public List<T> GetCopy()
         {
-            if (Head == null)
+            if (_head == null)
             {
                 return new List<T>();
             }
 
-            List<T> newList = new List<T>(Head.Data);
+            List<T> newList = new List<T>(_head.Data);
 
             newList.Count = Count;
 
-            ListItem<T> current1 = Head.Next;
-            ListItem<T> current2 = newList.Head;
+            ListItem<T> currentThisList = _head.Next;
+            ListItem<T> currentCopyList = newList._head;
 
-            while (current1 != null)
+            while (currentThisList != null)
             {
-                current2.Next = new ListItem<T>(current1.Data);
+                currentCopyList.Next = new ListItem<T>(currentThisList.Data);
 
-                current1 = current1.Next;
-                current2 = current2.Next;
+                currentThisList = currentThisList.Next;
+                currentCopyList = currentCopyList.Next;
             }
 
             return newList;
@@ -221,16 +199,11 @@ namespace Academits.Dorosh.ListTask
 
         public override string ToString()
         {
-            if (Head == null)
-            {
-                return "Список пуст";
-            }
-
             StringBuilder stringBuilder = new StringBuilder("[ ");
 
-            for (ListItem<T> current = Head; current != null; current = current.Next)
+            for (ListItem<T> current = _head; current != null; current = current.Next)
             {
-                stringBuilder.Append(current.Data);
+                stringBuilder.Append(current);
 
                 if (current.Next != null)
                 {

@@ -9,13 +9,13 @@ namespace Academits.Dorosh.ListTask
             Console.WriteLine($"Исходный список: {list}");
             Console.WriteLine();
 
-            int item = -50;
+            int data = -50;
             int index = 0;
 
             for (int i = 0; i < 6; i++)
             {
                 int deletedItem;
-                List<int> tmpList = list.CopyTo();
+                List<int> tmpList = list.GetCopy();
 
                 try
                 {
@@ -26,12 +26,12 @@ namespace Academits.Dorosh.ListTask
                             Console.Write($"Разворот списка. ");
                             break;
                         case 1:
-                            tmpList.Insert(index, item);
-                            Console.Write($"В список по индексу {index} добавлен элемент [ {item} ]. ");
+                            tmpList.Insert(index, data);
+                            Console.Write($"В список по индексу {index} добавлен элемент [ {data} ]. ");
                             break;
                         case 2:
-                            tmpList.AddFirst(item - 10);
-                            Console.Write($"В начало списка добавлен элемент [ {item - 10} ]. ");
+                            tmpList.AddFirst(data - 10);
+                            Console.Write($"В начало списка добавлен элемент [ {data - 10} ]. ");
                             break;
                         case 3:
                             deletedItem = tmpList.RemoveAt(index);
@@ -42,9 +42,9 @@ namespace Academits.Dorosh.ListTask
                             Console.Write($"Удален первый элемент. Его значение [{deletedItem}]. ");
                             break;
                         case 5:
-                            item = tmpList.GetValue(1);
-                            bool isDeleted = tmpList.Remove(item);
-                            Console.Write($"Удаляется элемент со значением [{item}]. Успешно? {isDeleted}. ");
+                            data = tmpList.GetValue(0);
+                            bool isDeleted = tmpList.Remove(data);
+                            Console.Write($"Удаляется элемент со значением [{data}]. Успешно? {isDeleted}. ");
                             break;
                     }
 
@@ -70,6 +70,21 @@ namespace Academits.Dorosh.ListTask
 
             MethodsTest(list);
 
+            //List<string> list2 = new List<string>();
+
+            //list2.AddFirst("строка 1");
+            //list2.AddFirst(null);
+            //list2.AddFirst("строка 2");
+            //list2.AddFirst("строка 3");
+            //list2.AddFirst(null);
+
+            //Console.WriteLine(list2.ToString());
+
+            //string item = list2.GetValue(1);
+            //bool isDeleted = list2.Remove(item);
+            //Console.Write($"Удаляется элемент со значением [{item}]. Успешно? {isDeleted}. ");
+            //Console.WriteLine(list2.ToString());
+
             /*
             try // тест копирования
             {
@@ -89,7 +104,7 @@ namespace Academits.Dorosh.ListTask
             }*/
 
             // Тест индексов
-
+            /*
             Console.WriteLine();
             Console.WriteLine($"Исходный список: {list}");
 
@@ -138,7 +153,7 @@ namespace Academits.Dorosh.ListTask
                 Console.WriteLine(e.Message);
                 Console.WriteLine();
             }
-
+            */
             Console.ReadKey();
         }
     }

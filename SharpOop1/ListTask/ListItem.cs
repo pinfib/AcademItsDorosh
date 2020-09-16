@@ -1,6 +1,6 @@
 ﻿namespace Academits.Dorosh.ListTask
 {
-    public class ListItem<T>
+    internal class ListItem<T>
     {
         public T Data { get; set; }
 
@@ -21,7 +21,7 @@
         {
             if (Data == null)
             {
-                return "";
+                return "null";
             }
 
             return Data.ToString();
