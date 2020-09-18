@@ -41,18 +41,18 @@ namespace Academits.Dorosh.ArrayListTask
         {
             get
             {
+                if (index < 0 || index >= Count)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), $"Передано значение [{index}], допустимое значение от 0 до {Count}");
+                }
+
                 return _items[index];
             }
             set
             {
-                if (index < 0 || index > Count)
+                if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException("Недопустимое значение индекса");
-                }
-
-                if(IsReadOnly)
-                {
-                    throw new NotSupportedException("Cписок доступен только для чтения.");
+                    throw new ArgumentOutOfRangeException(nameof(index), $"Передано значение [{index}], допустимое значение от 0 до {Count}");
                 }
 
                 _items[index] = value;
@@ -71,7 +71,7 @@ namespace Academits.Dorosh.ArrayListTask
         {
             if (capacity < 0)
             {
-                throw new ArgumentOutOfRangeException("Значение параметра capacity меньше нуля.");
+                throw new ArgumentOutOfRangeException(nameof(capacity), $"Передано значение [{capacity}]. Значение параметра capacity не может быть меньше нуля.");
             }
 
             _items = new T[capacity];
@@ -129,7 +129,7 @@ namespace Academits.Dorosh.ArrayListTask
 
             if (arrayIndex < 0)
             {
-                throw new ArgumentOutOfRangeException("Значение параметра arrayIndex меньше 0.");
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex), $"Передано значение [{arrayIndex}]. Допустимое значение от 0 до {array.Length - 1}");
             }
 
             if (array.Length < Count + arrayIndex)
@@ -144,7 +144,7 @@ namespace Academits.Dorosh.ArrayListTask
         {
             for (int i = 0; i < Count; i++)
             {
-                if (object.Equals(_items[i], item))
+                if (Equals(_items[i], item))
                 {
                     return i;
                 }
@@ -157,7 +157,7 @@ namespace Academits.Dorosh.ArrayListTask
         {
             if (index < 0 || index > Count)
             {
-                throw new ArgumentOutOfRangeException($"Передан индекс {index}, значение индекса должно быть от 0 до {Count}");
+                throw new ArgumentOutOfRangeException(nameof(index), $"Передано значение [{index}], значение индекса должно быть от 0 до {Count}");
             }
 
             if (Count >= _items.Length)
@@ -192,7 +192,7 @@ namespace Academits.Dorosh.ArrayListTask
         {
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentOutOfRangeException($"Передан индекс {index}, значение индекса должно быть от 0 до {Count - 1}");
+                throw new ArgumentOutOfRangeException(nameof(index), $"Передано значение [{index}], значение индекса должно быть от 0 до {Count - 1}");
             }
 
             if (index < Count - 1)
