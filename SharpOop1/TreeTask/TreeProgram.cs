@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Academits.Dorosh.TreeTask
 {
@@ -10,33 +7,101 @@ namespace Academits.Dorosh.TreeTask
     {
         static void Main(string[] args)
         {
-            CourseTree<int> tree = new CourseTree<int>(new TreeNode<int>(8));
+            try
+            {
+                var numbersTree = new Tree<int>();
 
-            tree.Add(3);
-            tree.Add(10);
-            tree.Add(1);
-            tree.Add(6);
-            tree.Add(14);
-            tree.Add(4);
-            tree.Add(7);
-            tree.Add(13);
+                numbersTree.Add(8);
+                numbersTree.Add(10);
+                numbersTree.Add(3);
+                numbersTree.Add(1);
+                numbersTree.Add(6);
+                numbersTree.Add(14);
+                numbersTree.Add(4);
+                numbersTree.Add(7);
+                numbersTree.Add(13);
 
-            //tree.Add(11);
-            //tree.Add(12);
-            //tree.Add(13);
-            //tree.Add(14);
-            //tree.Add(15);
+                Console.WriteLine("Дерево int");
 
-            //tree.Add(9);
-            //tree.Add(8);
-            //tree.Add(7);
-            //tree.Add(6);
-            //tree.Add(5);
-            //tree.Add(4);
+                Console.WriteLine(numbersTree);
 
-            Console.WriteLine(tree.ToString());
+                var stringBuilder = new StringBuilder();
+                Action<int> action = (x) => { stringBuilder.Append($"{x} "); };
 
-           
+                numbersTree.BreadthFirstTraversal(action);
+                Console.WriteLine($"Обход в ширину:\t\t\t{stringBuilder}");
+                Console.WriteLine();
+
+                stringBuilder.Clear();
+                numbersTree.RecursiveDepthFirstTraversal(action);
+                Console.WriteLine($"Обход в глубину с рекурсией:\t{stringBuilder}");
+                Console.WriteLine();
+
+                stringBuilder.Clear();
+                numbersTree.DepthFirstTraversal(action);
+                Console.WriteLine($"Обход в в глубину:\t\t{stringBuilder}");
+                Console.WriteLine();
+
+                Console.WriteLine("Удаление элемента по значению.");
+                var data = 10;
+                Console.WriteLine($"Удаляется элемент \"{data}\". Удаление успешно? {numbersTree.Remove(data)}");
+                Console.WriteLine(numbersTree);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            try
+            {
+                var stringsTree = new Tree<string>("корень");
+
+                stringsTree.Add("собака");
+                stringsTree.Add("мышь");
+                stringsTree.Add("попугай");
+                stringsTree.Add("черепаха");
+                stringsTree.Add("як");
+                stringsTree.Add("коза");
+                stringsTree.Add("корова");
+                stringsTree.Add("конь");
+                stringsTree.Add("кот");
+
+                Console.WriteLine();
+                Console.WriteLine("Дерево string");
+                Console.WriteLine();
+
+                Console.WriteLine(stringsTree);
+
+                var stringBuilder = new StringBuilder();
+                var stringInsert = new StringBuilder("Животное: ");
+                Action<string> action = (x) => { stringBuilder.AppendLine($"{stringInsert}{x} "); };
+
+                stringsTree.BreadthFirstTraversal(action);
+                Console.WriteLine($"Обход в ширину:");
+                Console.WriteLine(stringBuilder);
+                Console.WriteLine();
+
+                stringBuilder.Clear();
+                stringsTree.RecursiveDepthFirstTraversal(action);
+                Console.WriteLine("Обход в глубину с рекурсией:");
+                Console.WriteLine(stringBuilder);
+                Console.WriteLine();
+
+                stringBuilder.Clear();
+                stringsTree.DepthFirstTraversal(action);
+                Console.WriteLine($"Обход в глубину:");
+                Console.WriteLine(stringBuilder);
+                Console.WriteLine();
+
+                Console.WriteLine("Удаление элемента по значению.");
+                var data = "корень";
+                Console.WriteLine($"Удаляется элемент \"{data}\". Удаление успешно? {stringsTree.Remove(data)}");
+                Console.WriteLine(stringsTree);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             Console.ReadKey();
         }

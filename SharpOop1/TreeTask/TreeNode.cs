@@ -1,26 +1,33 @@
-﻿namespace Academits.Dorosh.TreeTask
-{
-    class TreeNode<T>
-    {
-        // private TreeNode<T>[] children;   // для небинарного дерева
+﻿using System;
 
+namespace Academits.Dorosh.TreeTask
+{
+    internal class TreeNode<T>
+    {
         public TreeNode<T> Left { get; set; }
         public TreeNode<T> Right { get; set; }
         public T Data { get; set; }
 
         public TreeNode(T data)
         {
+            if (data == null)
+            {
+                throw new ArgumentException($"Значение аргумента не может быть null", nameof(data));
+            }
+
             Left = null;
             Right = null;
             Data = data;
         }
-        // убрать, если не нужно
 
-        /*public TreeNode(T data, TreeNode<T> left, TreeNode<T> right)
+        public override string ToString()
         {
-            Left = left;
-            Right = right;
-            Data = data;
-        }*/
+            if (Data != null)
+            {
+                return Data.ToString();
+            }
+
+            return "null";
+        }
     }
 }
