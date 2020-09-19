@@ -147,6 +147,7 @@
             this.resultScaleListBox.Name = "resultScaleListBox";
             this.resultScaleListBox.Size = new System.Drawing.Size(203, 94);
             this.resultScaleListBox.TabIndex = 12;
+            this.resultScaleListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.currentTemperatureTextBox_KeyDown);
             // 
             // currentScaleListBox
             // 
@@ -156,6 +157,7 @@
             this.currentScaleListBox.Name = "currentScaleListBox";
             this.currentScaleListBox.Size = new System.Drawing.Size(203, 94);
             this.currentScaleListBox.TabIndex = 11;
+            this.currentScaleListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.currentTemperatureTextBox_KeyDown);
             // 
             // label7
             // 
@@ -202,6 +204,7 @@
             this.currentTemperatureTextBox.Size = new System.Drawing.Size(412, 38);
             this.currentTemperatureTextBox.TabIndex = 2;
             this.currentTemperatureTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.currentTemperatureTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.currentTemperatureTextBox_KeyDown);
             // 
             // MainForm
             // 
@@ -211,6 +214,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(440, 400);
             this.Name = "MainForm";
             this.Text = "Перевод температур";
             this.menuStrip1.ResumeLayout(false);

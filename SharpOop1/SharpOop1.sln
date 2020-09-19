@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureTask", "Temperat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinesweeperTask", "Minesweeper\MinesweeperTask.csproj", "{291B1DF7-E5E4-4B9F-91EB-8AD263BB0603}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureConverters", "TemperatureConverters\TemperatureConverters.csproj", "{3F53ECE2-87BC-4E65-AFB8-D4328E6988A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{291B1DF7-E5E4-4B9F-91EB-8AD263BB0603}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{291B1DF7-E5E4-4B9F-91EB-8AD263BB0603}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{291B1DF7-E5E4-4B9F-91EB-8AD263BB0603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F53ECE2-87BC-4E65-AFB8-D4328E6988A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F53ECE2-87BC-4E65-AFB8-D4328E6988A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F53ECE2-87BC-4E65-AFB8-D4328E6988A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F53ECE2-87BC-4E65-AFB8-D4328E6988A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

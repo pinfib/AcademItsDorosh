@@ -1,7 +1,7 @@
 ﻿using Academits.Dorosh.TemperatureTask.Model;
 using Academits.Dorosh.TemperatureTask.View;
 using System;
-
+using System.Windows.Forms;
 
 namespace Academits.Dorosh.TemperatureTask
 {
@@ -13,11 +13,18 @@ namespace Academits.Dorosh.TemperatureTask
         [STAThread]
         static void Main()
         {
-            TemperatureConverter temperatureConverter = new TemperatureConverter();
+            try
+            {
+                TemperatureConverter temperatureConverter = new TemperatureConverter();
 
-            IView view = new WindowsFormsView(temperatureConverter);
+                IView view = new WindowsFormsView(temperatureConverter);
 
-            view.Start();
+                view.Start();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
