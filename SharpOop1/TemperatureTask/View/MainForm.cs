@@ -14,7 +14,7 @@ namespace Academits.Dorosh.TemperatureTask.View
 
             InitializeComponent();
 
-            foreach (var scale in _temperatureConverter.List)
+            foreach (var scale in _temperatureConverter.ScaleList)
             {
                 currentScaleListBox.Items.Add(scale);
                 resultScaleListBox.Items.Add(scale);

@@ -8,7 +8,7 @@ namespace Academits.Dorosh.TemperatureTask.Model
     {
         readonly Assembly _assembly;
 
-        public List<string> List { get; private set; }
+        public List<string> ScaleList { get; private set; }
 
         public TemperatureConverter()
         {
@@ -22,13 +22,13 @@ namespace Academits.Dorosh.TemperatureTask.Model
                 throw new ArgumentNullException(nameof(types), "Не удалось получить перечень классов из сборки");
             }
 
-            List = new List<string>();
+            ScaleList = new List<string>();
 
             foreach (var type in types)
             {
                 if (type.GetInterface("IConverter") != null)
                 {
-                    List.Add(type.Name);
+                    ScaleList.Add(type.Name);
                 }
             }
         }
