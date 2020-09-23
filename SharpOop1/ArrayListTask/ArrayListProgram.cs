@@ -38,6 +38,7 @@ namespace Academits.Dorosh.ArrayListTask
 
             try
             {
+                element = "ch";
                 list.Insert(list.Count, element);
                 Console.WriteLine($"Вставка по индексу элемента со значением [{element}] в конец: {list}");
                 Console.WriteLine();
@@ -51,6 +52,7 @@ namespace Academits.Dorosh.ArrayListTask
 
             try
             {
+                element = "rt";
                 list.Insert(index, element);
                 Console.WriteLine($"Вставка элемента со значением [{element}] по индексу [{index}]: {list}");
                 Console.WriteLine();

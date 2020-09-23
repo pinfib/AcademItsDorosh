@@ -157,7 +157,7 @@ namespace Academits.Dorosh.ArrayListTask
         {
             if (index < 0 || index > Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), $"Передано значение [{index}], значение индекса должно быть от 0 до {Count - 1}");
+                throw new ArgumentOutOfRangeException(nameof(index), $"Передано значение [{index}], значение индекса должно быть от 0 до {Count}");
             }
 
             if (Count >= _items.Length)
