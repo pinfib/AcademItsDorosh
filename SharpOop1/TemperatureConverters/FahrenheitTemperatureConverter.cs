@@ -1,10 +1,8 @@
 ﻿namespace Academits.Dorosh.TemperatureConverters
 {
-    public class Fahrenheit : IConverter
+    public class FahrenheitTemperatureConverter : ITemperatureConverter
     {
-        public Fahrenheit()
-        {
-        }
+        public string ScaleName => "Фаренгейт";
 
         public double ConvertFromCelsius(double temperature)
         {

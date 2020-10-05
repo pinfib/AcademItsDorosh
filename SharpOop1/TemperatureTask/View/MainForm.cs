@@ -14,7 +14,7 @@ namespace Academits.Dorosh.TemperatureTask.View
 
             InitializeComponent();
 
-            foreach (var scale in _temperatureConverter.ScaleList)
+            foreach (var scale in _temperatureConverter.ScalesList)
             {
                 currentScaleListBox.Items.Add(scale);
                 resultScaleListBox.Items.Add(scale);
@@ -28,9 +28,9 @@ namespace Academits.Dorosh.TemperatureTask.View
         {
             try
             {
-                double currentTemperature = Convert.ToDouble(currentTemperatureTextBox.Text);
+                var currentTemperature = Convert.ToDouble(currentTemperatureTextBox.Text);
 
-                double resultTemperature = _temperatureConverter.ConvertTemperature(currentTemperature, currentScaleListBox.SelectedItem.ToString(), resultScaleListBox.SelectedItem.ToString());
+                var resultTemperature = _temperatureConverter.ConvertTemperature(currentTemperature, currentScaleListBox.SelectedItem.ToString(), resultScaleListBox.SelectedItem.ToString());
 
                 resultTemperatureTextBox.Text = resultTemperature.ToString();
             }

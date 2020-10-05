@@ -1,19 +1,22 @@
-﻿using System;
+﻿using Academits.Dorosh.TemperatureConverters;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+
 
 namespace Academits.Dorosh.TemperatureTask.Model
 {
     public class TemperatureConverter
     {
-        readonly Assembly _assembly;
+        private readonly Assembly _assembly;
 
-        public List<string> ScaleList { get; private set; }
+        private readonly Dictionary<string, ITemperatureConverter> _converters;
+
+        public List<string> ScalesList { get; }
 
         public TemperatureConverter()
         {
-            //_assembly = Assembly.LoadFrom("..\\..\\..\\TemperatureConverters\\bin\\Debug\\TemperatureConverters.dll");
-            _assembly = Assembly.LoadFrom("..\\..\\Model\\TemperatureConverters.dll");
+            _assembly = typeof(ITemperatureConverter).Assembly;
 
             var types = _assembly.GetTypes();
 
@@ -22,50 +25,34 @@ namespace Academits.Dorosh.TemperatureTask.Model
                 throw new ArgumentNullException(nameof(types), "Не удалось получить перечень классов из сборки");
             }
 
-            ScaleList = new List<string>();
+            ScalesList = new List<string>();
+            _converters = new Dictionary<string, ITemperatureConverter>(types.Length);
 
             foreach (var type in types)
             {
-                if (type.GetInterface("IConverter") != null)
+                if (type.GetInterface(nameof(ITemperatureConverter)) != null)
                 {
-                    ScaleList.Add(type.Name);
+                    var classInstance = (ITemperatureConverter)_assembly.CreateInstance(type.FullName);
+
+                    if (classInstance == null)
+                    {
+                        throw new ArgumentNullException(nameof(classInstance), "Не удалось получить экземпляр класса.");
+                    }
+
+                    ScalesList.Add(classInstance.ScaleName);
+
+                    _converters.Add(classInstance.ScaleName, classInstance);
                 }
             }
         }
 
-        private object CreateClassInstance(string scale)
-        {
-            var сlassInstance = _assembly.CreateInstance($"Academits.Dorosh.TemperatureConverters.{scale}");
-
-            if (сlassInstance == null)
-            {
-                throw new ArgumentNullException(nameof(сlassInstance), "Не удалось создать класс.");
-            }
-
-            return сlassInstance;
-        }
-
-        private MethodInfo GetMethod(object classInstance, string methodName)
-        {
-            var method = classInstance.GetType().GetMethod(methodName);
-
-            if (method == null)
-            {
-                throw new ArgumentNullException(nameof(method), "Не удалось вызвать метод.");
-            }
-
-            return method;
-        }
-
         public double ConvertTemperature(double temperature, string currentScale, string resultScale)
         {
-            var converterToCelsius = CreateClassInstance(currentScale);
-            var getCelsiusTemperature = GetMethod(converterToCelsius, "ConvertToCelsius");
-            var celsiusTemperature = getCelsiusTemperature.Invoke(converterToCelsius, new object[] { temperature });
+            var converterToCelsius = _converters[currentScale];
+            var celsiusTemperature = converterToCelsius.ConvertToCelsius(temperature);
 
-            var converterFromCelsius = CreateClassInstance(resultScale);
-            var getResultTemperature = GetMethod(converterFromCelsius, "ConvertFromCelsius");
-            var resultTemperature = getResultTemperature.Invoke(converterFromCelsius, new object[] { celsiusTemperature });
+            var converterFromCelsius = _converters[resultScale];
+            var resultTemperature = converterFromCelsius.ConvertFromCelsius(celsiusTemperature);
 
             return Convert.ToDouble(resultTemperature);
         }

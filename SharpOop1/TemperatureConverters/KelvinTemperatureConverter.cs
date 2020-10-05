@@ -1,10 +1,8 @@
 ﻿namespace Academits.Dorosh.TemperatureConverters
 {
-    public class Kelvin : IConverter
+    public class KelvinTemperatureConverter : ITemperatureConverter
     {
-        public Kelvin()
-        {
-        }
+        public string ScaleName => "Кельвин";
 
         public double ConvertFromCelsius(double temperature)
         {
