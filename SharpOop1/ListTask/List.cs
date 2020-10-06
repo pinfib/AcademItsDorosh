@@ -16,6 +16,8 @@ namespace Academits.Dorosh.ListTask
         public List(T data)
         {
             _head = new ListItem<T>(data);
+
+            Count++;
         }
 
         private ListItem<T> GetListItemByIndex(int index)
@@ -35,7 +37,7 @@ namespace Academits.Dorosh.ListTask
             return current;
         }
 
-        public T GetFirstValue()
+        public T GetFirstData()
         {
             if (_head == null)
             {
@@ -45,14 +47,14 @@ namespace Academits.Dorosh.ListTask
             return _head.Data;
         }
 
-        public T GetValue(int index)
+        public T GetData(int index)
         {
             ListItem<T> listItem = GetListItemByIndex(index);
 
             return listItem.Data;
         }
 
-        public T SetValue(int index, T data)        // Выдает старое значение
+        public T SetData(int index, T data)        // Выдает старое значение
         {
             ListItem<T> listItem = GetListItemByIndex(index);
 
@@ -74,16 +76,16 @@ namespace Academits.Dorosh.ListTask
             if (index == 0)
             {
                 AddFirst(data);
-            }
-            else
-            {
-                ListItem<T> previous = GetListItemByIndex(index - 1);
-                ListItem<T> current = previous.Next;
 
-                previous.Next = new ListItem<T>(data, current);
-
-                Count++;
+                return;
             }
+
+            ListItem<T> previous = GetListItemByIndex(index - 1);
+            ListItem<T> current = previous.Next;
+
+            previous.Next = new ListItem<T>(data, current);
+
+            Count++;
         }
 
         public T RemoveAt(int index)                // Выдает старое значение
@@ -93,17 +95,17 @@ namespace Academits.Dorosh.ListTask
             if (index == 0)
             {
                 oldData = RemoveFirst();
-            }
-            else
-            {
-                ListItem<T> previous = GetListItemByIndex(index - 1);
-                ListItem<T> current = previous.Next;
 
-                oldData = current.Data;
-                previous.Next = current.Next;
-
-                Count--;
+                return oldData;
             }
+
+            ListItem<T> previous = GetListItemByIndex(index - 1);
+            ListItem<T> current = previous.Next;
+
+            oldData = current.Data;
+            previous.Next = current.Next;
+
+            Count--;
 
             return oldData;
         }

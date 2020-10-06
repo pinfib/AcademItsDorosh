@@ -42,7 +42,7 @@ namespace Academits.Dorosh.ListTask
                             Console.Write($"Удален первый элемент. Его значение [{deletedItem}]. ");
                             break;
                         case 5:
-                            data = tmpList.GetValue(0);
+                            data = tmpList.GetData(0);
                             bool isDeleted = tmpList.Remove(data);
                             Console.Write($"Удаляется элемент со значением [{data}]. Успешно? {isDeleted}. ");
                             break;
@@ -61,7 +61,7 @@ namespace Academits.Dorosh.ListTask
 
         static void Main(string[] args)
         {
-            List<int> list = new List<int>();
+            List<int> list = new List<int>(40);
 
             list.AddFirst(30);
             list.AddFirst(20);
@@ -70,28 +70,12 @@ namespace Academits.Dorosh.ListTask
 
             MethodsTest(list);
 
-            //List<string> list2 = new List<string>();
-
-            //list2.AddFirst("строка 1");
-            //list2.AddFirst(null);
-            //list2.AddFirst("строка 2");
-            //list2.AddFirst("строка 3");
-            //list2.AddFirst(null);
-
-            //Console.WriteLine(list2.ToString());
-
-            //string item = list2.GetValue(1);
-            //bool isDeleted = list2.Remove(item);
-            //Console.Write($"Удаляется элемент со значением [{item}]. Успешно? {isDeleted}. ");
-            //Console.WriteLine(list2.ToString());
-
-            /*
             try // тест копирования
             {
-                List<int> list2 = list.CopyTo();
+                List<int> list2 = list.GetCopy();
                 Console.WriteLine("Копирование списка.");
                 Console.WriteLine($"Исходный список: {list}");
-                list.SetValue(1, -333);
+                list.SetData(1, -333);
                 Console.WriteLine($"Новый спиок: {list2}");
 
                 Console.WriteLine();
@@ -101,17 +85,17 @@ namespace Academits.Dorosh.ListTask
                 Console.WriteLine();
                 Console.WriteLine(e.Message);
                 Console.WriteLine();
-            }*/
+            }
 
             // Тест индексов
-            /*
+            
             Console.WriteLine();
             Console.WriteLine($"Исходный список: {list}");
 
             try // крайние индексы
             {
-                Console.WriteLine($"Значение по индексу 0: {list.GetValue(0)}");
-                Console.WriteLine($"Значение по индексу {list.Count - 1}: {list.GetValue(list.Count - 1)}");
+                Console.WriteLine($"Значение по индексу 0: {list.GetData(0)}");
+                Console.WriteLine($"Значение по индексу {list.Count - 1}: {list.GetData(list.Count - 1)}");
 
             }
             catch (Exception e)
@@ -123,7 +107,7 @@ namespace Academits.Dorosh.ListTask
 
             try // за границами списка
             {
-                Console.WriteLine($"Значение по индексу -1: {list.GetValue(-1)}");
+                Console.WriteLine($"Значение по индексу -1: {list.GetData(-1)}");
             }
             catch (Exception e)
             {
@@ -134,7 +118,7 @@ namespace Academits.Dorosh.ListTask
 
             try // за границами списка
             {
-                Console.WriteLine($"Значение по индексу {list.Count}: {list.GetValue(list.Count)}");
+                Console.WriteLine($"Значение по индексу {list.Count}: {list.GetData(list.Count)}");
             }
             catch (Exception e)
             {
@@ -145,7 +129,7 @@ namespace Academits.Dorosh.ListTask
 
             try // в границах списка
             {
-                Console.WriteLine($"Значение по индексу {1}: {list.GetValue(1)}");
+                Console.WriteLine($"Значение по индексу {1}: {list.GetData(1)}");
             }
             catch (Exception e)
             {
@@ -153,7 +137,7 @@ namespace Academits.Dorosh.ListTask
                 Console.WriteLine(e.Message);
                 Console.WriteLine();
             }
-            */
+            
             Console.ReadKey();
         }
     }
