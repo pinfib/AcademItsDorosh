@@ -1,4 +1,6 @@
-﻿namespace Academits.Dorosh.MinesweeperTask.Model
+﻿using System;
+
+namespace Academits.Dorosh.MinesweeperTask.Model
 {
     public struct DifficultMode
     {

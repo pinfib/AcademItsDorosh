@@ -8,15 +8,16 @@ using System.Windows.Forms;
 
 namespace Academits.Dorosh.MinesweeperTask.View
 {
-    public class CellButton : Button
+    internal class CellButton : Button
     {
         private bool _flag;
-        
-        //public int Flag { get; set; }
+
         public int X { get; set; }
+
         public int Y { get; set; }
 
         public event EventHandler CellFlagged;
+
         public event EventHandler CellCleared;
 
         public CellButton(int x, int y, int size)
@@ -36,7 +37,7 @@ namespace Academits.Dorosh.MinesweeperTask.View
 
         public void SetFlag()
         {
-            if(_flag)
+            if (_flag)
             {
                 _flag = false;
 

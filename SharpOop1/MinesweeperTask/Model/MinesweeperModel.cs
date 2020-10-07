@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Academits.Dorosh.MinesweeperTask.Model
 {
-    public class Minesweeper
+    public class MinesweeperModel
     {
         private bool[,] _field;
 
@@ -11,29 +11,25 @@ namespace Academits.Dorosh.MinesweeperTask.Model
 
         private int _bombsCount;
 
-        public static Dictionary<string, DifficultMode> DifficultModes { get; }
+        public GameTimer Timer { get; }
+
+        public Dictionary<string, DifficultMode> DifficultModes { get; }
 
         public event EventHandler Win;
 
         public event EventHandler Defeat;
 
-        static Minesweeper()
+        public MinesweeperModel()
         {
             DifficultModes = new Dictionary<string, DifficultMode>
             {
-                ["Newbie"] = new DifficultMode ( 9, 9, 10 ),
-                ["Dilettant"] = new DifficultMode ( 16, 16, 40),
-                ["Expert"] = new DifficultMode ( 16, 30, 99 )
+                ["Test"] = new DifficultMode(5, 11, 5),
+                ["Newbie"] = new DifficultMode(9, 9, 10),
+                ["Intermediate"] = new DifficultMode(16, 16, 40),
+                ["Expert"] = new DifficultMode(16, 30, 99)
             };
-        }
 
-        public Minesweeper() : this(9, 9, 10)
-        {
-        }
-
-        public Minesweeper(int rowsCount, int columnsCount, int bombsCount)
-        {
-            CreateField(rowsCount, columnsCount, bombsCount);
+            Timer = new GameTimer();
         }
 
         public void CreateField(int rowsCount, int columnsCount, int bombsCount)
@@ -42,7 +38,7 @@ namespace Academits.Dorosh.MinesweeperTask.Model
 
             _bombsCount = bombsCount;
 
-            _field = new bool[rowsCount, columnsCount];
+            _field = new bool[columnsCount, rowsCount];
 
             Random random = new Random();
 
@@ -50,8 +46,8 @@ namespace Academits.Dorosh.MinesweeperTask.Model
             {
                 while (true)
                 {
-                    int x = random.Next(0, rowsCount);
-                    int y = random.Next(0, columnsCount);
+                    int x = random.Next(0, columnsCount);
+                    int y = random.Next(0, rowsCount);
 
                     if (_field[x, y])
                     {
@@ -65,7 +61,7 @@ namespace Academits.Dorosh.MinesweeperTask.Model
             }
         }
 
-        public int CheckBomb(int x, int y)
+        public int CheckBomb(int x, int y) // TODO: переименовать
         {
             if (_field[x, y])
             {
@@ -73,7 +69,8 @@ namespace Academits.Dorosh.MinesweeperTask.Model
                 return -1;
             }
 
-            int sideLength = _field.GetLength(0);
+            int side1Length = _field.GetLength(0);
+            int side2Length = _field.GetLength(1);
             int countBombs = 0;
 
             int sideWidth = x + 1;
@@ -90,7 +87,7 @@ namespace Academits.Dorosh.MinesweeperTask.Model
             {
                 for (int j = x - 1; j <= sideWidth; j++)
                 {
-                    if (i < 0 || j < 0 || i >= sideLength || j >= sideLength)
+                    if (i < 0 || j < 0 || i >= side2Length || j >= side1Length)
                     {
                         continue;
                     }

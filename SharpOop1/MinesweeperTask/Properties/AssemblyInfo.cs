@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных со сборкой.
-[assembly: AssemblyTitle("Minesweeper")]
+[assembly: AssemblyTitle("MinesweeperTask")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Minesweeper")]
+[assembly: AssemblyProduct("MinesweeperTask")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("291b1df7-e5e4-4b9f-91eb-8ad263bb0603")]
+[assembly: Guid("945c77f1-5335-44f4-8b37-90a53073093f")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

@@ -7,49 +7,44 @@ namespace Academits.Dorosh.MinesweeperTask.View
 {
     public partial class MainWindow : Form, IView
     {
-        private MinesweeperPresenter _presenter;
+        public MinesweeperPresenter _presenter;
 
         private TableLayoutPanel _gameField;
 
-        private BombsCountLabel _bombsCountLabel;
+        private int _bombsCounter;
 
-        private GameTimerLabel _gameTimer;
-
-        public MainWindow(MinesweeperPresenter presenter)
+        public int BombsCounter
         {
-            _presenter = presenter;
-
-            InitializeComponent();
-
-            newGameButton.Click += _presenter.StartNewGame;
-
-            _bombsCountLabel = new BombsCountLabel();
-            infoTableLayoutPanel.Controls.Add(_bombsCountLabel, 0, 0);
-
-            _gameTimer = new GameTimerLabel();
-            infoTableLayoutPanel.Controls.Add(_gameTimer, 3, 0);
-
-            CreateField(9, 9, 10);
-            //_presenter.CreateField(9, 9, 10);
-            //_presenter.StartNewGame(this, EventArgs.Empty);
+            get
+            {
+                return _bombsCounter;
+            }
+            set
+            {
+                _bombsCounter = value;
+                bombsCounterLabel.Text = _bombsCounter.ToString();
+            }
         }
 
-        public void StartView()
+        public MainWindow()
         {
-            
-            Application.Run(this);
+            InitializeComponent();
         }
 
         public void SetPresenter(MinesweeperPresenter presenter)
         {
             _presenter = presenter;
+
+            startNewGameButton.Click += _presenter.StartNewGame;
+        }
+
+        public void StartView()
+        {
+            Application.Run(this);
         }
 
         public void CreateField(int rowsCount, int columnsCount, int bombsCount)
         {
-            _gameTimer.Reset();
-            _bombsCountLabel.SetBombsCount(bombsCount);
-
             if (_gameField != null)
             {
                 _gameField.Dispose();
@@ -60,43 +55,47 @@ namespace Academits.Dorosh.MinesweeperTask.View
             _gameField = new TableLayoutPanel();
             _gameField.ColumnCount = columnsCount;
             _gameField.RowCount = rowsCount;
-            _gameField.Name = "mineField";
             _gameField.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             _gameField.Margin = new Padding(0);
             _gameField.Padding = new Padding(0);
-            _gameField.Width = columnsCount * fieldLength;     
-            _gameField.Height = rowsCount * fieldLength;           
+            _gameField.Width = columnsCount * fieldLength;
+            _gameField.Height = rowsCount * fieldLength;
             _gameField.AutoSize = true;
             _gameField.TabIndex = 0;
-            _gameField.Location = new Point(10, 73);
             _gameField.BackColor = Color.White;
 
-            for (int i = 0; i < rowsCount; i++)
+            for (int y = 0; y < rowsCount; y++)
             {
-                _gameField.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, fieldLength));
                 _gameField.RowStyles.Add(new RowStyle(SizeType.Absolute, fieldLength));
 
-                for (int j = 0; j < columnsCount; j++)
+                for (int x = 0; x < columnsCount; x++)
                 {
-                    CellButton button = new CellButton(j, i, fieldLength);
+                    _gameField.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, fieldLength));
+
+                    CellButton button = new CellButton(x, y, fieldLength);
 
                     button.MouseDown += new MouseEventHandler(_presenter.FieldButtonLeftClick);
                     button.MouseDown += new MouseEventHandler(_presenter.FieldButtonRightClick);
-                    button.CellFlagged += new EventHandler(_bombsCountLabel.DecreaseBombsCounter);
-                    button.CellCleared += new EventHandler(_bombsCountLabel.IncreaseBombsCounter);
+                    button.CellFlagged += new EventHandler(DecreaseBombsCounter);
+                    button.CellCleared += new EventHandler(IncreaseBombsCounter);
 
-                    _gameField.Controls.Add(button, j, i);
+                    _gameField.Controls.Add(button, x, y);
                 }
             }
 
-            mainTableLayoutPanel.Controls.Add(_gameField, 0, 1);
+            gameFieldPanel.Controls.Add(_gameField);
 
-            _gameTimer.Start();
+            BombsCounter = bombsCount;
         }
 
-        public void UpdateField()
+        private void DecreaseBombsCounter(object sender, EventArgs e)
         {
-            _gameField.Refresh();
+            BombsCounter--;
+        }
+
+        private void IncreaseBombsCounter(object sender, EventArgs e)
+        {
+            BombsCounter++;
         }
 
         public void ClearCell(object control)
@@ -140,7 +139,7 @@ namespace Academits.Dorosh.MinesweeperTask.View
                 label.Padding = new Padding(0);
                 label.Dock = DockStyle.Fill;
                 label.TextAlign = ContentAlignment.MiddleCenter;
-                label.Font = new Font("Segoe UI Black", 16F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)), true);
+                label.Font = new Font("Segoe UI Black", 16F, FontStyle.Bold, GraphicsUnit.Point, 204, true);
 
                 switch (bombsCount)
                 {
@@ -168,9 +167,6 @@ namespace Academits.Dorosh.MinesweeperTask.View
                     case 8:
                         label.ForeColor = Color.Gray;
                         break;
-                    default:
-                        label.ForeColor = Color.Black;
-                        break;
                 }
 
                 label.Text = bombsCount.ToString();
@@ -179,7 +175,7 @@ namespace Academits.Dorosh.MinesweeperTask.View
             }
         }
 
-        public void SetIcon(int x, int y, int icon) //TODO: enum
+        public void SetIcon(int x, int y, int icon)
         {
             PictureBox pictureBox = new PictureBox();
 
@@ -203,16 +199,21 @@ namespace Academits.Dorosh.MinesweeperTask.View
             _gameField.Controls.Add(pictureBox, x, y);
         }
 
+        public void GameTimerUpdate(string time)
+        {
+            gameTimerLabel.Text = time;
+        }
+
         public void Win(object sender, EventArgs e)
         {
-            _gameTimer.Stop();
             MessageBox.Show("Вы победили!");
+            _gameField.Enabled = false;
         }
 
         public void Defeat(object sender, EventArgs e)
         {
-            _gameTimer.Stop();
             MessageBox.Show("Вы проиграли!");
+            _gameField.Enabled = false;
         }
     }
 }

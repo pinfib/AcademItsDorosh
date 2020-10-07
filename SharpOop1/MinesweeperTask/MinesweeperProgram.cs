@@ -20,12 +20,9 @@ namespace Academits.Dorosh.MinesweeperTask
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            MinesweeperPresenter presenter = new MinesweeperPresenter(new Minesweeper());
-
-            IView view = new MainWindow(presenter);
-            presenter.SetView(view);
-
-            view.StartView();
+            IView view = new MainWindow();
+            var model = new MinesweeperModel();
+            var presenter = new MinesweeperPresenter(view, model);
         }
     }
 }

@@ -1,17 +1,21 @@
-﻿using Academits.Dorosh.MinesweeperTask.Presenter;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Academits.Dorosh.MinesweeperTask.Presenter;
 
 namespace Academits.Dorosh.MinesweeperTask.View
 {
     public interface IView
     {
-        void StartView();
-
         void SetPresenter(MinesweeperPresenter presenter);
+
+        void StartView();
 
         void CreateField(int rowsCount, int columnsCount, int bombsCount);
 
-        void UpdateField();
+        void GameTimerUpdate(string time);
 
         void ClearCell(object control);
 
