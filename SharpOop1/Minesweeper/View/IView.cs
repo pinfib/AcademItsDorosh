@@ -9,9 +9,7 @@ namespace Academits.Dorosh.MinesweeperTask.View
 
         void SetPresenter(MinesweeperPresenter presenter);
 
-        void CreateField(int cellsCount);
-
-        void SetBombsCount(int BombsCount);
+        void CreateField(int rowsCount, int columnsCount, int bombsCount);
 
         void UpdateField();
 

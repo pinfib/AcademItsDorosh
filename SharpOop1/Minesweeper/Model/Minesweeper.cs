@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace Academits.Dorosh.MinesweeperTask.Model
 {
@@ -11,26 +11,38 @@ namespace Academits.Dorosh.MinesweeperTask.Model
 
         private int _bombsCount;
 
+        public static Dictionary<string, DifficultMode> DifficultModes { get; }
+
         public event EventHandler Win;
 
         public event EventHandler Defeat;
 
-        public Minesweeper() : this(9, 10)
+        static Minesweeper()
+        {
+            DifficultModes = new Dictionary<string, DifficultMode>
+            {
+                ["Newbie"] = new DifficultMode ( 9, 9, 10 ),
+                ["Dilettant"] = new DifficultMode ( 16, 16, 40),
+                ["Expert"] = new DifficultMode ( 16, 30, 99 )
+            };
+        }
+
+        public Minesweeper() : this(9, 9, 10)
         {
         }
 
-        public Minesweeper(int cellsCount, int bombsCount)
+        public Minesweeper(int rowsCount, int columnsCount, int bombsCount)
         {
-            CreateField(cellsCount, bombsCount);
+            CreateField(rowsCount, columnsCount, bombsCount);
         }
 
-        public void CreateField(int cellsCount, int bombsCount)
+        public void CreateField(int rowsCount, int columnsCount, int bombsCount)
         {
-            _closedCells = cellsCount * cellsCount;
+            _closedCells = rowsCount * columnsCount;
 
             _bombsCount = bombsCount;
 
-            _field = new bool[cellsCount, cellsCount];
+            _field = new bool[rowsCount, columnsCount];
 
             Random random = new Random();
 
@@ -38,8 +50,8 @@ namespace Academits.Dorosh.MinesweeperTask.Model
             {
                 while (true)
                 {
-                    int x = random.Next(0, cellsCount);
-                    int y = random.Next(0, cellsCount);
+                    int x = random.Next(0, rowsCount);
+                    int y = random.Next(0, columnsCount);
 
                     if (_field[x, y])
                     {

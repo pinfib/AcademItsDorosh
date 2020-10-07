@@ -46,7 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presenter\Presenter.cs" />
+    <Compile Include="Model\DifficultMode.cs" />
+    <Compile Include="Presenter\MinesweeperPresenter.cs" />
+    <Compile Include="View\BombsCountLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\CellButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -60,7 +64,7 @@
     <Compile Include="Model\Minesweeper.cs" />
     <Compile Include="MinesweeperProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\GameTimer.cs">
+    <Compile Include="View\GameTimerLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -31,7 +31,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.counter = new System.Windows.Forms.Label();
             this.newGameButton = new System.Windows.Forms.Button();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1.SuspendLayout();
@@ -62,7 +61,6 @@
             this.infoTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.infoTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.infoTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.infoTableLayoutPanel.Controls.Add(this.counter, 0, 0);
             this.infoTableLayoutPanel.Controls.Add(this.newGameButton, 1, 0);
             this.infoTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
@@ -73,17 +71,6 @@
             this.infoTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.infoTableLayoutPanel.Size = new System.Drawing.Size(267, 70);
             this.infoTableLayoutPanel.TabIndex = 1;
-            // 
-            // counter
-            // 
-            this.counter.AutoSize = true;
-            this.counter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.counter.Location = new System.Drawing.Point(3, 0);
-            this.counter.Name = "counter";
-            this.counter.Size = new System.Drawing.Size(82, 70);
-            this.counter.TabIndex = 2;
-            this.counter.Text = "СЧЕТЧИК";
-            this.counter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // newGameButton
             // 
@@ -127,7 +114,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.infoTableLayoutPanel.ResumeLayout(false);
-            this.infoTableLayoutPanel.PerformLayout();
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.mainTableLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -142,7 +128,6 @@
         private System.Windows.Forms.TableLayoutPanel infoTableLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.Button newGameButton;
-        private System.Windows.Forms.Label counter;
     }
 }
 

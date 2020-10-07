@@ -1,5 +1,4 @@
 ﻿using Academits.Dorosh.MinesweeperTask.Presenter;
-using MinesweeperTask.View;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,29 +7,36 @@ namespace Academits.Dorosh.MinesweeperTask.View
 {
     public partial class MainWindow : Form, IView
     {
-        private TableLayoutPanel _gameField;
-
         private MinesweeperPresenter _presenter;
 
-        private int _bombsCount;
+        private TableLayoutPanel _gameField;
 
-        GameTimer _gameTimer;
+        private BombsCountLabel _bombsCountLabel;
+
+        private GameTimerLabel _gameTimer;
 
         public MainWindow(MinesweeperPresenter presenter)
         {
             _presenter = presenter;
-            _gameTimer = new GameTimer();
 
             InitializeComponent();
 
-            CreateField(9);
-            SetBombsCount(10);
+            newGameButton.Click += _presenter.StartNewGame;
 
-            newGameButton.Click += _presenter.NewGameButton_Click;
+            _bombsCountLabel = new BombsCountLabel();
+            infoTableLayoutPanel.Controls.Add(_bombsCountLabel, 0, 0);
+
+            _gameTimer = new GameTimerLabel();
+            infoTableLayoutPanel.Controls.Add(_gameTimer, 3, 0);
+
+            CreateField(9, 9, 10);
+            //_presenter.CreateField(9, 9, 10);
+            //_presenter.StartNewGame(this, EventArgs.Empty);
         }
 
         public void StartView()
         {
+            
             Application.Run(this);
         }
 
@@ -39,8 +45,11 @@ namespace Academits.Dorosh.MinesweeperTask.View
             _presenter = presenter;
         }
 
-        public void CreateField(int cellsCount)
+        public void CreateField(int rowsCount, int columnsCount, int bombsCount)
         {
+            _gameTimer.Reset();
+            _bombsCountLabel.SetBombsCount(bombsCount);
+
             if (_gameField != null)
             {
                 _gameField.Dispose();
@@ -49,38 +58,32 @@ namespace Academits.Dorosh.MinesweeperTask.View
             int fieldLength = 30;
 
             _gameField = new TableLayoutPanel();
-            _gameField.ColumnCount = cellsCount;
-            _gameField.RowCount = cellsCount;
+            _gameField.ColumnCount = columnsCount;
+            _gameField.RowCount = rowsCount;
             _gameField.Name = "mineField";
             _gameField.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             _gameField.Margin = new Padding(0);
             _gameField.Padding = new Padding(0);
-            _gameField.Width = cellsCount * fieldLength;    // В установке размеров нет необходимости, так как установлен авторазмер, 
-            _gameField.Height = cellsCount * fieldLength;   // но если этого не сделать, поле сильно дергается при пересоздании
+            _gameField.Width = columnsCount * fieldLength;     
+            _gameField.Height = rowsCount * fieldLength;           
             _gameField.AutoSize = true;
             _gameField.TabIndex = 0;
             _gameField.Location = new Point(10, 73);
             _gameField.BackColor = Color.White;
 
-            for (int i = 0; i < cellsCount; i++)
+            for (int i = 0; i < rowsCount; i++)
             {
                 _gameField.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, fieldLength));
                 _gameField.RowStyles.Add(new RowStyle(SizeType.Absolute, fieldLength));
 
-                for (int j = 0; j < cellsCount; j++)
+                for (int j = 0; j < columnsCount; j++)
                 {
-                    CellButton button = new CellButton(j, i);
+                    CellButton button = new CellButton(j, i, fieldLength);
 
-                    button.Dock = DockStyle.Fill;
-                    button.Margin = new Padding(0);
-                    button.Padding = new Padding(0);
-                    button.MinimumSize = new Size(fieldLength, fieldLength);
-                    button.Name = "button";
-                    button.TabIndex = 0;
-                    button.Text = "";
-                    button.UseVisualStyleBackColor = true;
-                    button.Click += new EventHandler(_presenter.FieldButton_Click);
-                    //button.MouseDown += new MouseEventHandler(_presenter.FieldButton_Click);
+                    button.MouseDown += new MouseEventHandler(_presenter.FieldButtonLeftClick);
+                    button.MouseDown += new MouseEventHandler(_presenter.FieldButtonRightClick);
+                    button.CellFlagged += new EventHandler(_bombsCountLabel.DecreaseBombsCounter);
+                    button.CellCleared += new EventHandler(_bombsCountLabel.IncreaseBombsCounter);
 
                     _gameField.Controls.Add(button, j, i);
                 }
@@ -88,14 +91,7 @@ namespace Academits.Dorosh.MinesweeperTask.View
 
             mainTableLayoutPanel.Controls.Add(_gameField, 0, 1);
 
-            _gameTimer.Reset();
-            infoTableLayoutPanel.Controls.Add(_gameTimer, 3, 0);
             _gameTimer.Start();
-        }
-
-        public void SetBombsCount(int BombsCount)
-        {
-            _bombsCount = BombsCount;
         }
 
         public void UpdateField()
@@ -127,15 +123,17 @@ namespace Academits.Dorosh.MinesweeperTask.View
 
                     CellButton button = _gameField.GetControlFromPosition(j, i) as CellButton;
 
-                    button?.PerformClick();
-                    //_presenter.FieldButton_Click(this, EventArgs.Empty);
+                    if (button != null && !button.IsFlagged())
+                    {
+                        _presenter.FieldButtonLeftClick(button, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    }
                 }
             }
         }
 
-        public void SetInfo(int x, int y, int minesCount)
+        public void SetInfo(int x, int y, int bombsCount)
         {
-            if (minesCount > 0)
+            if (bombsCount > 0)
             {
                 Label label = new Label();
                 label.Margin = new Padding(0);
@@ -144,7 +142,7 @@ namespace Academits.Dorosh.MinesweeperTask.View
                 label.TextAlign = ContentAlignment.MiddleCenter;
                 label.Font = new Font("Segoe UI Black", 16F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)), true);
 
-                switch (minesCount)
+                switch (bombsCount)
                 {
                     case 1:
                         label.ForeColor = Color.Blue;
@@ -175,7 +173,7 @@ namespace Academits.Dorosh.MinesweeperTask.View
                         break;
                 }
 
-                label.Text = minesCount.ToString();
+                label.Text = bombsCount.ToString();
 
                 _gameField.Controls.Add(label, x, y);
             }
@@ -203,7 +201,6 @@ namespace Academits.Dorosh.MinesweeperTask.View
             }
 
             _gameField.Controls.Add(pictureBox, x, y);
-
         }
 
         public void Win(object sender, EventArgs e)

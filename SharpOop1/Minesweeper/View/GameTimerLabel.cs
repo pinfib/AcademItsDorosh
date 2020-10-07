@@ -5,9 +5,9 @@ using System.Text;
 using System.Windows.Forms;
 
 
-namespace MinesweeperTask.View
+namespace Academits.Dorosh.MinesweeperTask.View
 {
-    public class GameTimer : Label
+    public class GameTimerLabel : Label
     {
         int _second;
         int _minute;
@@ -15,7 +15,7 @@ namespace MinesweeperTask.View
 
         Timer _timer;
 
-        public GameTimer()
+        public GameTimerLabel()
         {
             _timer = new Timer();
             _timer.Interval = 1000;
