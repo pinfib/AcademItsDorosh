@@ -9,9 +9,9 @@ namespace Academits.Dorosh.TreeTask
         {
             try
             {
-                var numbersTree = new Tree<int>();
+                var numbersTree = new Tree<int>(8, new ReverseIntComparer());
+                //var numbersTree = new Tree<int>(8);
 
-                numbersTree.Add(8);
                 numbersTree.Add(10);
                 numbersTree.Add(3);
                 numbersTree.Add(1);
@@ -43,7 +43,7 @@ namespace Academits.Dorosh.TreeTask
                 Console.WriteLine();
 
                 Console.WriteLine("Удаление элемента по значению.");
-                var data = 10;
+                var data = 8;
                 Console.WriteLine($"Удаляется элемент \"{data}\". Удаление успешно? {numbersTree.Remove(data)}");
                 Console.WriteLine(numbersTree);
             }
@@ -54,12 +54,14 @@ namespace Academits.Dorosh.TreeTask
 
             try
             {
-                var stringsTree = new Tree<string>("корень");
+                var stringsTree = new Tree<string>();
 
+                stringsTree.Add(null);
                 stringsTree.Add("собака");
                 stringsTree.Add("мышь");
                 stringsTree.Add("попугай");
                 stringsTree.Add("черепаха");
+                stringsTree.Add(null);
                 stringsTree.Add("як");
                 stringsTree.Add("коза");
                 stringsTree.Add("корова");
@@ -74,10 +76,20 @@ namespace Academits.Dorosh.TreeTask
 
                 var stringBuilder = new StringBuilder();
                 var stringInsert = new StringBuilder("Животное: ");
-                Action<string> action = (x) => { stringBuilder.AppendLine($"{stringInsert}{x} "); };
+                Action<string> action = (x) =>
+                {
+                    if (x == null)
+                    {
+                        stringBuilder.AppendLine("null");
+                    }
+                    else
+                    {
+                        stringBuilder.AppendLine($"{stringInsert}{x}");
+                    }
+                };
 
                 stringsTree.BreadthFirstTraversal(action);
-                Console.WriteLine($"Обход в ширину:");
+                Console.WriteLine("Обход в ширину:");
                 Console.WriteLine(stringBuilder);
                 Console.WriteLine();
 
@@ -89,12 +101,13 @@ namespace Academits.Dorosh.TreeTask
 
                 stringBuilder.Clear();
                 stringsTree.DepthFirstTraversal(action);
-                Console.WriteLine($"Обход в глубину:");
+                Console.WriteLine("Обход в глубину:");
                 Console.WriteLine(stringBuilder);
                 Console.WriteLine();
 
                 Console.WriteLine("Удаление элемента по значению.");
-                var data = "корень";
+                //var data = "корень";
+                string data = null;
                 Console.WriteLine($"Удаляется элемент \"{data}\". Удаление успешно? {stringsTree.Remove(data)}");
                 Console.WriteLine(stringsTree);
             }

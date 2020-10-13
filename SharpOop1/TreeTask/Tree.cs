@@ -4,14 +4,21 @@ using System.Text;
 
 namespace Academits.Dorosh.TreeTask
 {
-    class Tree<T> where T : IComparable<T>
+    class Tree<T>
     {
         private TreeNode<T> _root;
+
+        private IComparer<T> _comparer;
 
         public int Count { get; private set; }
 
         public Tree()
         {
+        }
+
+        public Tree(IComparer<T> comparer)
+        {
+            _comparer = comparer;
         }
 
         public Tree(T data)
@@ -21,25 +28,47 @@ namespace Academits.Dorosh.TreeTask
             Count++;
         }
 
+        public Tree(T data, IComparer<T> comparer)
+        {
+            _root = new TreeNode<T>(data);
+
+            _comparer = comparer;
+
+            Count++;
+        }
+
+        private int Compare(T data1, T data2)
+        {
+            if (_comparer != null)
+            {
+                return _comparer.Compare(data1, data2);
+            }
+
+            if (data1 == null && data2 == null)
+            {
+                return 0;
+            }
+
+            if (data1 == null)
+            {
+                return 1;
+            }
+
+            return ((IComparable)data1).CompareTo((IComparable)data2);
+        }
+
         private TreeNode<T> GetNextNode(TreeNode<T> current, T data)
         {
-            if (data.CompareTo(current.Data) < 0)
+            if (Compare(data, current.Data) < 0)
             {
                 return current.Left;
             }
-            else
-            {
-                return current.Right;
-            }
+
+            return current.Right;
         }
 
         public void Add(T data)
         {
-            if (data == null)
-            {
-                throw new ArgumentException($"Значение аргумента не может быть null", nameof(data));
-            }
-
             if (_root == null)
             {
                 _root = new TreeNode<T>(data);
@@ -49,11 +78,11 @@ namespace Academits.Dorosh.TreeTask
                 return;
             }
 
-            TreeNode<T> current = _root;
+            var current = _root;
 
             while (true)
             {
-                if (data.CompareTo(current.Data) < 0)
+                if (Compare(data, current.Data) < 0)
                 {
                     if (current.Left == null)
                     {
@@ -82,13 +111,13 @@ namespace Academits.Dorosh.TreeTask
             }
         }
 
-        public bool IsContains(T data)
+        public bool Contains(T data)
         {
-            TreeNode<T> current = _root;
+            var current = _root;
 
             while (current != null)
             {
-                if (data.CompareTo(current.Data) == 0)
+                if (Compare(current.Data, data) == 0)
                 {
                     return true;
                 }
@@ -107,7 +136,7 @@ namespace Academits.Dorosh.TreeTask
             }
             else
             {
-                if (ReferenceEquals(parentNode.Left, removedNode))  //определить removedNode это левый или правый узел
+                if (ReferenceEquals(parentNode.Left, removedNode))  //определить removedNode - это левый или правый узел у своего родителя
                 {
                     parentNode.Left = insertNode;
                 }
@@ -126,18 +155,23 @@ namespace Academits.Dorosh.TreeTask
 
         public bool Remove(T data)
         {
-            if (!IsContains(data))
+            if (_root == null)
             {
                 return false;
             }
 
-            TreeNode<T> removedNode = _root;
-            TreeNode<T> parentRemovedNode = null;
+            var removedNode = _root;
+            var parentRemovedNode = (TreeNode<T>)default;
 
-            while (data.CompareTo(removedNode.Data) != 0)
+            while (Compare(removedNode.Data, data) != 0)
             {
                 parentRemovedNode = removedNode;
                 removedNode = GetNextNode(removedNode, data);
+
+                if (removedNode == null)
+                {
+                    return false;
+                }
             }
 
             if (removedNode.Right == null)                                  // узел с одним ребенком или без детей
@@ -158,16 +192,16 @@ namespace Academits.Dorosh.TreeTask
                 return true;
             }
 
-            TreeNode<T> insertNode = removedNode.Right;                             // узел с двумя детьми
-            TreeNode<T> parentInsertNode = removedNode;
+            var insertNode = removedNode.Right;                             // узел с двумя детьми
+            var parentInsertNode = removedNode;
 
-            while (insertNode.Left != null)                                         // находим самый левый узел в правом поддереве
+            while (insertNode.Left != null)                                         // найти самый левый узел в правом поддереве
             {
                 parentInsertNode = insertNode;
                 insertNode = insertNode.Left;
             }
 
-            ReplaceNode(parentInsertNode, insertNode, insertNode.Right, true);     // удаляем самый левый узел, и ставим на его место его правого ребенка, если он есть
+            ReplaceNode(parentInsertNode, insertNode, insertNode.Right, true);      // удалить самый левый узел, и поставить на его место его правого ребенка, если он есть
             ReplaceNode(parentRemovedNode, removedNode, insertNode, false);         // на место удаляемого элемента записываем самый левый элемент
 
             Count--;
@@ -175,15 +209,20 @@ namespace Academits.Dorosh.TreeTask
             return true;
         }
 
-        public void BreadthFirstTraversal(Action<T> action) //  обход в ширину
+        public void BreadthFirstTraversal(Action<T> action) // обход в ширину
         {
+            if (_root == null)
+            {
+                return;
+            }
+
             var queue = new Queue<TreeNode<T>>(Count);
 
             queue.Enqueue(_root);
 
             while (queue.Count != 0)
             {
-                TreeNode<T> treeNode = queue.Dequeue();
+                var treeNode = queue.Dequeue();
 
                 action(treeNode.Data);
 
@@ -206,6 +245,11 @@ namespace Academits.Dorosh.TreeTask
 
         private void RecursiveDepthFirstTraversal(TreeNode<T> treeNode, Action<T> action)
         {
+            if (_root == null)
+            {
+                return;
+            }
+
             action(treeNode.Data);
 
             if (treeNode.Left != null)
@@ -219,20 +263,24 @@ namespace Academits.Dorosh.TreeTask
             }
         }
 
-
         public void DepthFirstTraversal(Action<T> action) // обход в глубину без рекурсии
         {
-            Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>(Count);
+            if (_root == null)
+            {
+                return;
+            }
+
+            var stack = new Stack<TreeNode<T>>(Count);
 
             stack.Push(_root);
 
             while (stack.Count != 0)
             {
-                TreeNode<T> treeNode = stack.Pop();
+                var treeNode = stack.Pop();
 
                 action(treeNode.Data);
 
-                if (treeNode.Right != null)  //положить в стек всех детей элемента в обратном порядке
+                if (treeNode.Right != null)  // положить в стек всех детей элемента в обратном порядке
                 {
                     stack.Push(treeNode.Right);
                 }
@@ -244,14 +292,14 @@ namespace Academits.Dorosh.TreeTask
             }
         }
 
-        private string ToString(TreeNode<T> node, List<StringBuilder> list, int level)
+        private static string ToString(TreeNode<T> node, List<StringBuilder> list, int level)
         {
-            int stringLength = level * 4 + 3;
+            var stringLength = level * 4 + 3;
 
-            StringBuilder stringLeft = new StringBuilder();
+            var stringLeft = new StringBuilder();
             stringLeft.Insert(0, " ", stringLength);
 
-            StringBuilder stringRight = new StringBuilder();
+            var stringRight = new StringBuilder();
             stringRight.Insert(0, " ", stringLength);
 
             if (node.Right != null)
@@ -264,12 +312,12 @@ namespace Academits.Dorosh.TreeTask
                 list.Insert(list.Count, stringLeft.Append($"[L]: {ToString(node.Left, list, level + 1)}"));
             }
 
-            return node.Data.ToString();
+            return node.ToString();
         }
 
         public override string ToString()
         {
-            List<StringBuilder> list = new List<StringBuilder>(Count)
+            var list = new List<StringBuilder>(Count)
             {
                 new StringBuilder("[root]: ")
             };
@@ -283,13 +331,13 @@ namespace Academits.Dorosh.TreeTask
                 list[0].Append(ToString(_root, list, 1));
             }
 
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
             stringBuilder.AppendLine($"Количество элементов в дереве - {Count}");
 
-            for (int i = 0; i < list.Count; i++)
+            foreach (var e in list)
             {
-                stringBuilder.AppendLine(list[i].ToString());
+                stringBuilder.AppendLine(e.ToString());
             }
 
             return stringBuilder.ToString();
