@@ -9,8 +9,8 @@ namespace Academits.Dorosh.TreeTask
         {
             try
             {
-                var numbersTree = new Tree<int>(8, new ReverseIntComparer());
-                //var numbersTree = new Tree<int>(8);
+                //var numbersTree = new Tree<int>(8, new ReverseIntComparer());
+                var numbersTree = new Tree<int>(8);
 
                 numbersTree.Add(10);
                 numbersTree.Add(3);
@@ -54,7 +54,7 @@ namespace Academits.Dorosh.TreeTask
 
             try
             {
-                var stringsTree = new Tree<string>();
+                var stringsTree = new Tree<string>("корень");
 
                 stringsTree.Add(null);
                 stringsTree.Add("собака");
@@ -106,8 +106,7 @@ namespace Academits.Dorosh.TreeTask
                 Console.WriteLine();
 
                 Console.WriteLine("Удаление элемента по значению.");
-                //var data = "корень";
-                string data = null;
+                var data = "корень";
                 Console.WriteLine($"Удаляется элемент \"{data}\". Удаление успешно? {stringsTree.Remove(data)}");
                 Console.WriteLine(stringsTree);
             }

@@ -130,13 +130,13 @@ namespace Academits.Dorosh.TreeTask
 
         private void ReplaceNode(TreeNode<T> parentNode, TreeNode<T> removedNode, TreeNode<T> insertNode, bool insertNodeIsSubtree)
         {
-            if (parentNode == null) //удаление корня
+            if (parentNode == null) // удаление корня
             {
                 _root = insertNode;
             }
             else
             {
-                if (ReferenceEquals(parentNode.Left, removedNode))  //определить removedNode - это левый или правый узел у своего родителя
+                if (ReferenceEquals(parentNode.Left, removedNode))  // определить removedNode - это левый или правый узел у своего родителя
                 {
                     parentNode.Left = insertNode;
                 }
@@ -146,7 +146,7 @@ namespace Academits.Dorosh.TreeTask
                 }
             }
 
-            if (!insertNodeIsSubtree) //если встраиваемый узел не является поддеревом, то нужно обновить связи
+            if (!insertNodeIsSubtree) // если встраиваемый узел не является поддеревом, то нужно обновить связи
             {
                 insertNode.Left = removedNode.Left;
                 insertNode.Right = removedNode.Right;

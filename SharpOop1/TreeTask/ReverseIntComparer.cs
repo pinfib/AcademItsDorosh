@@ -6,7 +6,7 @@ namespace Academits.Dorosh.TreeTask
     {
         public int Compare(int x, int y)
         {
-            return x.CompareTo(y) * -1;
+            return -x.CompareTo(y);
         }
     }
 }
