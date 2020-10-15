@@ -6,7 +6,7 @@ namespace Academits.Dorosh.TemperatureTask.View
 {
     public partial class MainForm : Form
     {
-        readonly private TemperatureConverter _temperatureConverter;
+        private readonly TemperatureConverter _temperatureConverter;
 
         public MainForm(TemperatureConverter temperatureConverter)
         {
@@ -28,6 +28,11 @@ namespace Academits.Dorosh.TemperatureTask.View
         {
             try
             {
+                if (currentTemperatureTextBox.Text == "")
+                {
+                    throw new FormatException("Входная строка пуста.");
+                }
+
                 var currentTemperature = Convert.ToDouble(currentTemperatureTextBox.Text);
 
                 var resultTemperature = _temperatureConverter.ConvertTemperature(currentTemperature, currentScaleListBox.SelectedItem.ToString(), resultScaleListBox.SelectedItem.ToString());
