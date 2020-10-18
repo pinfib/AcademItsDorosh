@@ -90,19 +90,15 @@ namespace Academits.Dorosh.ListTask
 
         public T RemoveAt(int index)                // Выдает старое значение
         {
-            T oldData;
-
             if (index == 0)
             {
-                oldData = RemoveFirst();
-
-                return oldData;
+                return RemoveFirst();
             }
 
             ListItem<T> previous = GetListItemByIndex(index - 1);
             ListItem<T> current = previous.Next;
 
-            oldData = current.Data;
+            T oldData = current.Data;
             previous.Next = current.Next;
 
             Count--;
