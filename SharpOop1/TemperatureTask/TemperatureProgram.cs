@@ -15,7 +15,7 @@ namespace Academits.Dorosh.TemperatureTask
         {
             try
             {
-                TemperatureConverter temperatureConverter = new TemperatureConverter();
+                var temperatureConverter = new TemperatureConverter();
 
                 var view = new WindowsFormsView(temperatureConverter);
 
