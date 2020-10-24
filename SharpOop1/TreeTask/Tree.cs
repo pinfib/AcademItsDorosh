@@ -8,7 +8,7 @@ namespace Academits.Dorosh.TreeTask
     {
         private TreeNode<T> _root;
 
-        private IComparer<T> _comparer;
+        private readonly IComparer<T> _comparer;
 
         public int Count { get; private set; }
 
@@ -51,20 +51,10 @@ namespace Academits.Dorosh.TreeTask
 
             if (data1 == null)
             {
-                return 1;
+                return -1;
             }
 
-            return ((IComparable)data1).CompareTo((IComparable)data2);
-        }
-
-        private TreeNode<T> GetNextNode(TreeNode<T> current, T data)
-        {
-            if (Compare(data, current.Data) < 0)
-            {
-                return current.Left;
-            }
-
-            return current.Right;
+            return ((IComparable<T>)data1).CompareTo(data2);
         }
 
         public void Add(T data)
@@ -117,12 +107,21 @@ namespace Academits.Dorosh.TreeTask
 
             while (current != null)
             {
-                if (Compare(current.Data, data) == 0)
+                var compareResult = Compare(data, current.Data);
+
+                if (compareResult == 0)
                 {
                     return true;
                 }
 
-                current = GetNextNode(current, data);
+                if (compareResult < 0)
+                {
+                    current = current.Left;
+                }
+                else
+                {
+                    current = current.Right;
+                }
             }
 
             return false;
@@ -161,12 +160,27 @@ namespace Academits.Dorosh.TreeTask
             }
 
             var removedNode = _root;
-            var parentRemovedNode = (TreeNode<T>)default;
+            TreeNode<T> parentRemovedNode = null;
 
-            while (Compare(removedNode.Data, data) != 0)
+            while (true)
             {
+                var compareResult = Compare(data, removedNode.Data);
+
+                if (compareResult == 0)
+                {
+                    break;
+                }
+
                 parentRemovedNode = removedNode;
-                removedNode = GetNextNode(removedNode, data);
+
+                if (compareResult < 0)
+                {
+                    removedNode = removedNode.Left;
+                }
+                else
+                {
+                    removedNode = removedNode.Right;
+                }
 
                 if (removedNode == null)
                 {
@@ -240,16 +254,16 @@ namespace Academits.Dorosh.TreeTask
 
         public void RecursiveDepthFirstTraversal(Action<T> action) // обход в глубину с рекурсией 
         {
-            RecursiveDepthFirstTraversal(_root, action);
-        }
-
-        private void RecursiveDepthFirstTraversal(TreeNode<T> treeNode, Action<T> action)
-        {
             if (_root == null)
             {
                 return;
             }
 
+            RecursiveDepthFirstTraversal(_root, action);
+        }
+
+        private void RecursiveDepthFirstTraversal(TreeNode<T> treeNode, Action<T> action)
+        {
             action(treeNode.Data);
 
             if (treeNode.Left != null)

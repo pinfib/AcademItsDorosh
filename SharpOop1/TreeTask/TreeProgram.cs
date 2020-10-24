@@ -39,13 +39,18 @@ namespace Academits.Dorosh.TreeTask
 
                 stringBuilder.Clear();
                 numbersTree.DepthFirstTraversal(action);
-                Console.WriteLine($"Обход в в глубину:\t\t{stringBuilder}");
+                Console.WriteLine($"Обход в глубину:\t\t{stringBuilder}");
+                Console.WriteLine();
+
+                var data = 8;
+                Console.WriteLine($"Содержится ли в дереве элемент {data}? {numbersTree.Contains(data)}");
                 Console.WriteLine();
 
                 Console.WriteLine("Удаление элемента по значению.");
-                var data = 8;
                 Console.WriteLine($"Удаляется элемент \"{data}\". Удаление успешно? {numbersTree.Remove(data)}");
                 Console.WriteLine(numbersTree);
+
+                Console.WriteLine($"Содержится ли в дереве элемент {data}? {numbersTree.Contains(data)}");
             }
             catch (Exception e)
             {
